@@ -1,0 +1,3 @@
+dlxsim -x ~/ece695/lab2/os/work/os.dlx.obj -a -u ~/ece695/lab2/apps/q1/work/makeprocs.dlx.obj 2
+
+dlxsim -x os.dlx.obj -a -u makeprocs.dlx.obj 2 4

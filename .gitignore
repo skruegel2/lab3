@@ -1,0 +1,14 @@
+# Object files
+*.o
+*.aso
+*.obj
+*.dlx
+
+# List files
+*.lst
+*.depend
+
+# Binaries
+bin/
+
+!~/ece695/lab2/lib/share_memory.o
