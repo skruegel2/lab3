@@ -66,8 +66,9 @@ uint32 get_argument(char *string);
 //----------------------------------------------------------------------
 void ProcessModuleInit () {
   int		i;
+  int   idx;
 
-  dbprintf ('p', "Entering ProcessModuleInit\n");
+  dbprintf ('p', "ProcessModuleInit: %d\n", GetCurrentPid());
   AQueueInit (&freepcbs);
   AQueueInit (&runQueue);
   AQueueInit (&waitQueue);
@@ -85,7 +86,10 @@ void ProcessModuleInit () {
 
     //-------------------------------------------------------
     // STUDENT: Initialize the PCB's page table here.
-    //-------------------------------------------------------
+    //-------------------------------------------------------    
+    for (idx = 0; idx < PROCESS_PT_SIZE; idx++) {
+      pcbs[i].pagetable[idx] = 0;
+    }
 
     // Finally, insert the link into the queue
     if (AQueueInsertFirst(&freepcbs, pcbs[i].l) != QUEUE_SUCCESS) {
@@ -119,8 +123,7 @@ void ProcessSetStatus (PCB *pcb, int status) {
 //
 //----------------------------------------------------------------------
 void ProcessFreeResources (PCB *pcb) {
-  int i = 0;
-
+  dbprintf ('p', "ProcessFreeResources: %d\n", GetCurrentPid());
   // Allocate a new link for this pcb on the freepcbs queue
   if ((pcb->l = AQueueAllocLink(pcb)) == NULL) {
     printf("FATAL ERROR: could not get Queue Link in ProcessFreeResources!\n");
@@ -357,13 +360,13 @@ static void ProcessExit () {
 //
 //----------------------------------------------------------------------
 int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
-  int i;                   // Loop index variable
   int fd, n;               // Used for reading code from files.
   int start, codeS, codeL; // Used for reading code from files.
   int dataS, dataL;        // Used for reading code from files.
   int addr = 0;            // Used for reading code from files.
   unsigned char buf[100];  // Used for reading code from files.
   uint32 *stackframe;      // Stores address of current stack frame.
+  int newPage;             // Used for allocating pages for the new process.
   PCB *pcb;                // Holds pcb while we build it for this process.
   int intrs;               // Stores previous interrupt settings.
   uint32  initial_user_params[MAX_ARGS+2]; // Initial memory for user parameters (argc, argv)
@@ -377,11 +380,13 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
                            // beginning of the string to the current argument.
   uint32 initial_user_params_bytes;  // total number of bytes in initial user parameters array
 
+  dbprintf ('p', "ProcessFork: %d\n", GetCurrentPid());
 
   intrs = DisableIntrs ();
   dbprintf ('I', "Old interrupt value was 0x%x.\n", intrs);
   dbprintf ('p', "Entering ProcessFork args=0x%x 0x%x %s %d\n", (int)func,
 	    param, name, isUser);
+
   // Get a free PCB for the new process
   if (AQueueEmpty(&freepcbs)) {
     printf ("FATAL error: no free processes!\n");
@@ -416,8 +421,46 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
   // equal to the last 4-byte-aligned address in physical page
   // for the system stack.
   //---------------------------------------------------------
+  pcb->npages = 5;
+  // Set up 4 pages for user code and global data.
+  newPage = MemoryAllocPage ();
+  if (newPage == 0) {
+    printf ("aFATAL: couldn't allocate memory - no free pages!\n");
+    exitsim ();	// NEVER RETURNS!
+  }
+  pcb->pagetable[0] = MemorySetupPte (newPage);
+  newPage = MemoryAllocPage ();
+  if (newPage == 0) {
+    printf ("aFATAL: couldn't allocate memory - no free pages!\n");
+    exitsim ();	// NEVER RETURNS!
+  }
+  pcb->pagetable[1] = MemorySetupPte (newPage);
+  newPage = MemoryAllocPage ();
+  if (newPage == 0) {
+    printf ("aFATAL: couldn't allocate memory - no free pages!\n");
+    exitsim ();	// NEVER RETURNS!
+  }
+  pcb->pagetable[2] = MemorySetupPte (newPage);
+  newPage = MemoryAllocPage ();
+  if (newPage == 0) {
+    printf ("aFATAL: couldn't allocate memory - no free pages!\n");
+    exitsim ();	// NEVER RETURNS!
+  }
+  pcb->pagetable[3] = MemorySetupPte (newPage);
+  newPage = MemoryAllocPage ();
+  if (newPage == 0) {
+    printf ("aFATAL: couldn't allocate memory - no free pages!\n");
+    exitsim ();	// NEVER RETURNS!
+  }
+  pcb->pagetable[4] = MemorySetupPte (newPage);
+  newPage = MemoryAllocPage ();
+  if (newPage == 0) {
+    printf ("bFATAL: couldn't allocate system stack - no free pages!\n");
+    exitsim ();	// NEVER RETURNS!
+  }
+  pcb->sysStackArea = newPage * MEM_PAGE_SIZE;
 
-
+  stackframe = (uint32 *)(((pcb->sysStackArea + MEM_PAGE_SIZE) - 4) & 0xFFFFFF00);
 
   // Now that the stack frame points at the bottom of the system stack memory area, we need to
   // move it up (decrement it) by one stack frame size because we're about to fill in the
@@ -447,7 +490,9 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
   // STUDENT: setup the PTBASE, PTBITS, and PTSIZE here on the current
   // stack frame.
   //----------------------------------------------------------------------
-
+  stackframe[PROCESS_STACK_PTBASE] = (uint32)&(pcb->pagetable[0]);
+  stackframe[PROCESS_STACK_PTBITS] = (MEM_L1FIELD_FIRST_BITNUM << 16) + MEM_L1FIELD_FIRST_BITNUM;
+  stackframe[PROCESS_STACK_PTSIZE] = pcb->npages;
   if (isUser) {
     dbprintf ('p', "About to load %s\n", name);
     fd = ProcessGetCodeInfo (name, &start, &codeS, &codeL, &dataS, &dataL);
@@ -476,7 +521,7 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
     // STUDENT: setup the initial user stack pointer here as the top
     // of the process's virtual address space (4-byte aligned).
     //----------------------------------------------------------------------
-
+    stackframe[PROCESS_STACK_USER_STACKPOINTER] = (uint32)((MEM_MAX_VIRTUAL_ADDRESS) & 0xFFFFFFFC);
 
     //--------------------------------------------------------------------
     // This part is setting up the initial user stack with argc and argv.

@@ -30,6 +30,8 @@
 #define	PROCESS_TYPE_SYSTEM	0x100
 #define	PROCESS_TYPE_USER	0x200
 
+#define PROCESS_PT_SIZE 16  // Number of entries in page table for each process.
+
 typedef	void (*VoidFunc)();
 
 // Process control block
@@ -39,7 +41,7 @@ typedef struct PCB {
   uint32	sysStackArea;	// System stack area for this process
   unsigned int	flags;
   char		name[80];	// Process name
-  uint32	pagetable[/* Put the size of the L1 page table here */]; // Statically allocated page table
+  uint32	pagetable[PROCESS_PT_SIZE]; // Statically allocated page table
   int		npages;		// Number of pages allocated to this process
   Link		*l;		// Used for keeping PCB in queues
 } PCB;

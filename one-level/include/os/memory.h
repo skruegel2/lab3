@@ -17,7 +17,10 @@ int MemoryMoveBetweenSpaces (PCB *pcb, unsigned char *system, unsigned char *use
 int MemoryCopySystemToUser (PCB *pcb, unsigned char *from, unsigned char *to, int n);
 int MemoryCopyUserToSystem (PCB *pcb, unsigned char *from, unsigned char *to, int n);
 int MemoryPageFaultHandler(PCB *pcb);
-
+void MemorySetFreemap (int p, int b);
+void MemoryFreePage(uint32 page);
+int MemoryAllocPage(void);
+uint32 MemorySetupPte (uint32 page);
 //---------------------------------------------------------
 // Put your function prototypes here
 //---------------------------------------------------------

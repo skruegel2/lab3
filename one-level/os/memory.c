@@ -11,8 +11,7 @@
 #include "memory.h"
 #include "queue.h"
 
-// num_pages = size_of_memory / size_of_one_page
-static uint32 freemap[/*size*/];
+static uint32 freemap[MEM_NUM_PAGES/32];
 static uint32 pagestart;
 static int nfreepages;
 static int freemapmax;
@@ -41,9 +40,26 @@ static inline uint32 invert (uint32 n) {
 //
 //----------------------------------------------------------------------
 int MemoryGetSize() {
-  return (*((int *)DLX_MEMSIZE_ADDRESS));
+// Per the instructions, use 2 MB for physical memory size.
+//  return (*((int *)DLX_MEMSIZE_ADDRESS));
+  return 2 * 1024 * 1024;
 }
 
+//----------------------------------------------------------------------
+//
+//	MemorySetFreemap
+//
+//----------------------------------------------------------------------
+void MemorySetFreemap (int p, int b)
+{
+  uint32	wd = p / 32;
+  uint32	bitnum = p % 32;
+  dbprintf ('m', "MemorySetFreemap: %d\n", GetCurrentPid());
+
+  freemap[wd] = (freemap[wd] & invert(1 << bitnum)) | (b << bitnum);
+  dbprintf ('m', "Set freemap entry %d to 0x%x.\n",
+	    wd, freemap[wd]);
+}
 
 //----------------------------------------------------------------------
 //
@@ -56,6 +72,27 @@ int MemoryGetSize() {
 //
 //----------------------------------------------------------------------
 void MemoryModuleInit() {
+  int		i;
+  int		maxpage = MemoryGetSize () / MEM_PAGE_SIZE;
+  int		curpage;
+  dbprintf ('m', "MemoryModuleInit: %d\n", GetCurrentPid());
+
+  pagestart = (lastosaddress + MEM_PAGE_SIZE - 4) / MEM_PAGE_SIZE;
+  freemapmax = (maxpage+31) / 32;
+  dbprintf ('m', "Map has %d entries, memory size is 0x%x.\n",
+	    freemapmax, maxpage);
+  dbprintf ('m', "Free pages start with page # 0x%x.\n", pagestart);
+  for (i = 0; i < freemapmax; i++) {
+    // Initially, all pages are considered in use.  This is done to make
+    // sure we don't have any partially initialized freemap entries.
+    freemap[i] = 0;
+  }
+  nfreepages = 0;
+  for (curpage = pagestart; curpage < maxpage; curpage++) {
+    nfreepages += 1;
+    MemorySetFreemap (curpage, 1);
+  }
+  dbprintf ('m', "Initialized %d free pages.\n", nfreepages);
 }
 
 
@@ -68,6 +105,17 @@ void MemoryModuleInit() {
 //
 //----------------------------------------------------------------------
 uint32 MemoryTranslateUserToSystem (PCB *pcb, uint32 addr) {
+
+  
+  int	page = addr / MEM_PAGE_SIZE;
+  int offset = addr % MEM_PAGE_SIZE;
+
+  dbprintf ('m', "MemoryTranslateUserToSystem: %d\n", GetCurrentPid());
+
+  if (page > pcb->npages) {
+    return (0);
+  }
+  return ((pcb->pagetable[page] & MEM_PTE_MASK) + offset);
 }
 
 
@@ -114,7 +162,7 @@ int MemoryMoveBetweenSpaces (PCB *pcb, unsigned char *system, unsigned char *use
     // address.  MEM_PAGESIZE should be the size (in bytes) of 1 page of memory.
     // MEM_ADDRESS_OFFSET_MASK should be the bit mask required to get just the
     // "offset" portion of an address.
-    bytesToCopy = MEM_PAGESIZE - ((uint32)curUser & MEM_ADDRESS_OFFSET_MASK);
+    bytesToCopy = MEM_PAGE_SIZE - ((uint32)curUser & MEM_ADDRESS_OFFSET_MASK);
     
     // Now find minimum of bytes in this page vs. total bytes left to copy
     if (bytesToCopy > n) {
@@ -168,6 +216,8 @@ int MemoryCopyUserToSystem (PCB *pcb, unsigned char *from,unsigned char *to, int
 // Feel free to edit.
 //---------------------------------------------------------------------
 int MemoryPageFaultHandler(PCB *pcb) {
+  dbprintf ('m', "MemoryPageFaultHandler: %d\n", GetCurrentPid());
+  
   return MEM_FAIL;
 }
 
@@ -176,17 +226,50 @@ int MemoryPageFaultHandler(PCB *pcb) {
 // You may need to implement the following functions and access them from process.c
 // Feel free to edit/remove them
 //---------------------------------------------------------------------
-
 int MemoryAllocPage(void) {
-  return -1;
+  static int	mapnum = 0;
+  int		bitnum;
+  uint32	v;
+  dbprintf ('m', "MemoryAllocPage: %d\n", GetCurrentPid());
+
+  if (nfreepages == 0) {
+    return (0);
+  }
+  dbprintf ('m', "Allocating memory, starting with page %d\n", mapnum);
+  while (freemap[mapnum] == 0) {
+    mapnum += 1;
+    if (mapnum >= freemapmax) {
+      mapnum = 0;
+    }
+  }
+  v = freemap[mapnum];
+  for (bitnum = 0; (v & (1 << bitnum)) == 0; bitnum++) {
+  }
+  freemap[mapnum] &= invert(1 << bitnum);
+  v = (mapnum * 32) + bitnum;
+  dbprintf ('m', "Allocated memory, from map %d, page %d, map=0x%x.\n",
+	    mapnum, v, freemap[mapnum]);
+  nfreepages -= 1;
+  return (v);  
 }
 
+//----------------------------------------------------------------------
+//
+//	MemoryFreePage
+//
+//	Free a page of memory.
+//
+//----------------------------------------------------------------------
+void MemoryFreePage(uint32 page)
+{
+  dbprintf ('m', "MemoryFreePage: %d\n", GetCurrentPid());
+  MemorySetFreemap (page, 1);
+  nfreepages += 1;
+  dbprintf ('m',"Freed page 0x%x, %d remaining.\n", page, nfreepages);
+}
 
 uint32 MemorySetupPte (uint32 page) {
+  dbprintf ('m', "MemorySetupPte: %d\n", GetCurrentPid());
+  return ((page * MEM_PAGE_SIZE) | MEM_PTE_VALID);  
   return -1;
 }
-
-
-void MemoryFreePage(uint32 page) {
-}
-
