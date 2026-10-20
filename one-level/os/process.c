@@ -459,8 +459,10 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
     exitsim ();	// NEVER RETURNS!
   }
   pcb->sysStackArea = newPage * MEM_PAGE_SIZE;
+  dbprintf('m', "ProcessFork: pcb->sysStackArea = 0x%x\n", (int)pcb->sysStackArea);
 
-  stackframe = (uint32 *)(((pcb->sysStackArea + MEM_PAGE_SIZE) - 4) & 0xFFFFFF00);
+  stackframe = (uint32 *)(((pcb->sysStackArea + MEM_PAGE_SIZE) - 4) & 0xFFFFFFFC);
+  dbprintf('m', "ProcessFork: stackframe before adjustment = 0x%x\n", (int)stackframe);
 
   // Now that the stack frame points at the bottom of the system stack memory area, we need to
   // move it up (decrement it) by one stack frame size because we're about to fill in the
@@ -521,8 +523,7 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
     // STUDENT: setup the initial user stack pointer here as the top
     // of the process's virtual address space (4-byte aligned).
     //----------------------------------------------------------------------
-    stackframe[PROCESS_STACK_USER_STACKPOINTER] = (uint32)((MEM_MAX_VIRTUAL_ADDRESS) & 0xFFFFFFFC);
-
+    stackframe[PROCESS_STACK_USER_STACKPOINTER] = (uint32)((pcb->npages * MEM_PAGE_SIZE) & 0xFFFFFFFC);
     //--------------------------------------------------------------------
     // This part is setting up the initial user stack with argc and argv.
     //--------------------------------------------------------------------

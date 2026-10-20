@@ -10,7 +10,7 @@ extern int lastosaddress; // Defined in an assembly file
 // Existing function prototypes:
 //--------------------------------------------------------
 
-int MemoryGetSize();
+uint32 MemoryGetSize();
 void MemoryModuleInit();
 uint32 MemoryTranslateUserToSystem (PCB *pcb, uint32 addr);
 int MemoryMoveBetweenSpaces (PCB *pcb, unsigned char *system, unsigned char *user, int n, int dir);

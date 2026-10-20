@@ -1,5 +1,1 @@
-mainframer.sh 'cd os && make'
-
-dlxsim -x ~/ece695/lab2/os/work/os.dlx.obj -a -u ~/ece695/lab2/apps/q1/work/makeprocs.dlx.obj 2
-
-dlxsim -x os.dlx.obj -a -u makeprocs.dlx.obj 2 4
+dlxsim -D m -x os.dlx.obj -a -D m -u hello_world.dlx.obj > log
