@@ -20,7 +20,7 @@
 
 //--------------------------------------------------------
 #define MEM_MAX_PHYS_SIZE 0x200000 // 2 MB of physical memory
-#define MEM_MAX_VIRT_SIZE 0x200000 // 2 MB of virtual memory
+#define MEM_MAX_VIRT_SIZE 0x400000 // 2 MB of virtual memory
 #define MEM_PTE_VALID 0x00000001 // Page table entry is valid
 #define MEM_PTE_DIRTY 0x00000002 // Page table entry is dirty
 #define MEM_PAGE_SIZE 4096	// Size of a page in bytes
