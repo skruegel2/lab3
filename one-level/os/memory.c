@@ -71,7 +71,6 @@ void MemorySetFreemap (int p, int b)
 //
 //----------------------------------------------------------------------
 void MemoryModuleInit() {
-  int		i;
   int		maxpage = MemoryGetSize () / MEM_PAGE_SIZE;
   int		curpage;
   dbprintf ('m', "MemoryModuleInit\n");
@@ -216,8 +215,34 @@ int MemoryCopyUserToSystem (PCB *pcb, unsigned char *from,unsigned char *to, int
 // Feel free to edit.
 //---------------------------------------------------------------------
 int MemoryPageFaultHandler(PCB *pcb) {
-  dbprintf ('m', "MemoryPageFaultHandler: %d\n", GetCurrentPid());
-  
+  uint32 fault_address;     // Virt address that caused fault
+  uint32 sp;                // Current stack pointer
+  uint32 newPage;            // New page to allocate for stack
+  dbprintf ('m', "MemoryPageFaultHandler\n");
+  fault_address = pcb->currentSavedFrame[PROCESS_STACK_FAULT];
+  sp = pcb->currentSavedFrame[PROCESS_STACK_USER_STACKPOINTER];
+  // Zero out offset of sp
+  sp = sp & MEM_PTE_MASK;
+  dbprintf ('m', "fault_address=0x%x, sp=0x%x\n", fault_address, sp);
+  // If the fault address is greater than or equalt to the current sp
+  // minus 8, then it was the user stack that caused the page fault.  We need to allocate a new page for the stack.
+  if (fault_address >= (sp - 8)) {
+    dbprintf ('m', "MemoryPageFaultHandler: allocating new page for stack\n");
+    // Allocate new page for stack. If this fails, kill process.
+    // If success, setup pte and increment npages.
+    newPage = MemoryAllocPage();
+    if (newPage == 0) {
+      dbprintf ('m', "MemoryPageFaultHandler: could not allocate new page for stack\n");
+      ProcessKill();
+    }
+    pcb->pagetable[pcb->npages] = MemorySetupPte(newPage);
+    pcb->npages++;
+    return MEM_SUCCESS;
+  } 
+  else {
+    dbprintf ('m', "MemoryPageFaultHandler: page fault, killing process\n");
+    ProcessKill();
+  }
   return MEM_FAIL;
 }
 

@@ -123,7 +123,9 @@ void ProcessSetStatus (PCB *pcb, int status) {
 //
 //----------------------------------------------------------------------
 void ProcessFreeResources (PCB *pcb) {
-  dbprintf ('p', "ProcessFreeResources: %d\n", GetCurrentPid());
+  int idx;                // Loop index
+  uint32 pte;             // page table entry
+  dbprintf ('m', "ProcessFreeResources\n");
   // Allocate a new link for this pcb on the freepcbs queue
   if ((pcb->l = AQueueAllocLink(pcb)) == NULL) {
     printf("FATAL ERROR: could not get Queue Link in ProcessFreeResources!\n");
@@ -140,8 +142,20 @@ void ProcessFreeResources (PCB *pcb) {
   //------------------------------------------------------------
   // STUDENT: Free any memory resources on process death here.
   //------------------------------------------------------------
-
-
+  // Walk through the page table.  If valid, the zero out the 
+  // status bits and free the page. Mark the fremmap entry as
+  // free.  Finally, set the page table entry to 0.
+  for (idx = 0; idx < pcb->npages; idx++) {
+    pte = pcb->pagetable[idx];
+    if ((pte & MEM_PTE_VALID) == 0) {
+      continue;
+    }
+    MemoryFreePage(pte & MEM_PTE_MASK);
+    pcb->pagetable[idx] = 0;
+  }
+  // Need to free the system stack area as well.  
+  MemoryFreePage(pcb->sysStackArea);
+  // Page table is statically allocated, so no need to free it.
   ProcessSetStatus (pcb, PROCESS_STATUS_FREE);
 }
 

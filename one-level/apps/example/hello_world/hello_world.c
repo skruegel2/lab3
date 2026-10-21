@@ -15,7 +15,7 @@ void main (int argc, char *argv[])
 
   // Now print a message to show that everything worked
   Printf("hello_world (%d)\n", getpid());
-
+//  uint32* ptr = (uint32*)(MEM_MAX_VIRT_SIZE + 10);
   // // Signal the semaphore to tell the original process that we're done
   // if(sem_signal(s_procs_completed) != SYNC_SUCCESS) {
   //   Printf("hello_world (%d): Bad semaphore s_procs_completed (%d)!\n", getpid(), s_procs_completed);
