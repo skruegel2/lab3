@@ -30,7 +30,7 @@
 #define	PROCESS_TYPE_SYSTEM	0x100
 #define	PROCESS_TYPE_USER	0x200
 
-#define PROCESS_PT_SIZE 16  // Number of entries in page table for each process.
+#define PROCESS_PT_SIZE (MEM_MAX_VIRTUAL_ADDRESS >> MEM_L1FIELD_FIRST_BITNUM)  // Number of entries in page table for each process.
 
 typedef	void (*VoidFunc)();
 

@@ -145,13 +145,12 @@ void ProcessFreeResources (PCB *pcb) {
   // Walk through the page table.  If valid, the zero out the 
   // status bits and free the page. Mark the fremmap entry as
   // free.  Finally, set the page table entry to 0.
-  for (idx = 0; idx < pcb->npages; idx++) {
+  for (idx = 0; idx < PROCESS_PT_SIZE; idx++) {
     pte = pcb->pagetable[idx];
-    if ((pte & MEM_PTE_VALID) == 0) {
-      continue;
+    if ((pte & MEM_PTE_VALID) != 0) {
+      MemoryFreePage(pte >> MEM_L1FIELD_FIRST_BITNUM);
+      pcb->pagetable[idx] = 0;
     }
-    MemoryFreePage(pte & MEM_PTE_MASK);
-    pcb->pagetable[idx] = 0;
   }
   // Need to free the system stack area as well.  
   MemoryFreePage(pcb->sysStackArea);
@@ -508,7 +507,6 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
   //----------------------------------------------------------------------
   stackframe[PROCESS_STACK_PTBASE] = (uint32)&(pcb->pagetable[0]);
   stackframe[PROCESS_STACK_PTBITS] = (MEM_L1FIELD_FIRST_BITNUM << 16) | MEM_L1FIELD_FIRST_BITNUM;
-//  stackframe[PROCESS_STACK_PTSIZE] = pcb->npages;
   stackframe[PROCESS_STACK_PTSIZE] = (MEM_MAX_VIRTUAL_ADDRESS + 1) >> MEM_L1FIELD_FIRST_BITNUM;
   if (isUser) {
     dbprintf ('p', "About to load %s\n", name);
@@ -538,7 +536,6 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
     // STUDENT: setup the initial user stack pointer here as the top
     // of the process's virtual address space (4-byte aligned).
     //----------------------------------------------------------------------
-//    stackframe[PROCESS_STACK_USER_STACKPOINTER] = (uint32)((pcb->npages * MEM_PAGE_SIZE) & 0xFFFFFFFC);
     stackframe[PROCESS_STACK_USER_STACKPOINTER] = (uint32)(MEM_MAX_VIRTUAL_ADDRESS & 0xFFFFFFFC);
     dbprintf("USER SP = 0x%x\n", stackframe[PROCESS_STACK_USER_STACKPOINTER]);
     //--------------------------------------------------------------------
