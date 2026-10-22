@@ -466,7 +466,7 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
     printf ("aFATAL: couldn't allocate memory - no free pages!\n");
     exitsim ();	// NEVER RETURNS!
   }
-  pcb->pagetable[4] = MemorySetupPte (newPage);
+  pcb->pagetable[MEM_MAX_VIRTUAL_ADDRESS >> MEM_L1FIELD_FIRST_BITNUM] = MemorySetupPte (newPage);
   newPage = MemoryAllocPage ();
   if (newPage == 0) {
     printf ("bFATAL: couldn't allocate system stack - no free pages!\n");
@@ -507,8 +507,9 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
   // stack frame.
   //----------------------------------------------------------------------
   stackframe[PROCESS_STACK_PTBASE] = (uint32)&(pcb->pagetable[0]);
-  stackframe[PROCESS_STACK_PTBITS] = (MEM_L1FIELD_FIRST_BITNUM << 16) + MEM_L1FIELD_FIRST_BITNUM;
-  stackframe[PROCESS_STACK_PTSIZE] = pcb->npages;
+  stackframe[PROCESS_STACK_PTBITS] = (MEM_L1FIELD_FIRST_BITNUM << 16) | MEM_L1FIELD_FIRST_BITNUM;
+//  stackframe[PROCESS_STACK_PTSIZE] = pcb->npages;
+  stackframe[PROCESS_STACK_PTSIZE] = (MEM_MAX_VIRTUAL_ADDRESS + 1) >> MEM_L1FIELD_FIRST_BITNUM;
   if (isUser) {
     dbprintf ('p', "About to load %s\n", name);
     fd = ProcessGetCodeInfo (name, &start, &codeS, &codeL, &dataS, &dataL);
@@ -537,7 +538,9 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
     // STUDENT: setup the initial user stack pointer here as the top
     // of the process's virtual address space (4-byte aligned).
     //----------------------------------------------------------------------
-    stackframe[PROCESS_STACK_USER_STACKPOINTER] = (uint32)((pcb->npages * MEM_PAGE_SIZE) & 0xFFFFFFFC);
+//    stackframe[PROCESS_STACK_USER_STACKPOINTER] = (uint32)((pcb->npages * MEM_PAGE_SIZE) & 0xFFFFFFFC);
+    stackframe[PROCESS_STACK_USER_STACKPOINTER] = (uint32)(MEM_MAX_VIRTUAL_ADDRESS & 0xFFFFFFFC);
+    dbprintf("USER SP = 0x%x\n", stackframe[PROCESS_STACK_USER_STACKPOINTER]);
     //--------------------------------------------------------------------
     // This part is setting up the initial user stack with argc and argv.
     //--------------------------------------------------------------------

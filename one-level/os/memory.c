@@ -84,7 +84,12 @@ void MemoryModuleInit() {
   for (curpage = 0; curpage < maxpage; curpage++) {
     MemorySetFreemap (curpage, 0);
   }
- 
+  for (curpage = 0; curpage < freemapmax; curpage++) {
+    // Initially, all pages are considered in use.  This is done to make
+    // sure we don't have any partially initialized freemap entries.
+    freemap[curpage] = 0;
+  } 
+
   nfreepages = 0;
   for (curpage = pagestart; curpage < maxpage; curpage++) {
     nfreepages += 1;
@@ -110,10 +115,10 @@ uint32 MemoryTranslateUserToSystem (PCB *pcb, uint32 addr) {
 
   dbprintf ('m', "MemoryTranslateUserToSystem: page %d offset %d\n", page, offset);
 
-  if (page > pcb->npages) {
-    dbprintf ('m', "MemoryTranslateUserToSystem: page %d npages %d\n", page, pcb->npages);
-   return (0);
-  }
+  // if (page > pcb->npages) {
+  //   dbprintf ('m', "MemoryTranslateUserToSystem: page %d npages %d\n", page, pcb->npages);
+  //  return (0);
+  // }
   return ((pcb->pagetable[page] & MEM_PTE_MASK) + offset);
 }
 
@@ -296,5 +301,4 @@ void MemoryFreePage(uint32 page)
 uint32 MemorySetupPte (uint32 page) {
   dbprintf ('m', "MemorySetupPte\n");
   return ((page * MEM_PAGE_SIZE) | MEM_PTE_VALID);  
-  return -1;
 }

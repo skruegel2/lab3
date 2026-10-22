@@ -339,7 +339,10 @@ dointerrupt (unsigned int cause, unsigned int iar, unsigned int isr,
   uint32 handle;
   int ihandle;
 
-  dbprintf ('t',"Interrupt cause=0x%x iar=0x%x isr=0x%x args=0x%08x.\n",
+  uint32 fault_addr;
+  int vpn;
+
+  dbprintf ('m',"Interrupt cause=0x%x iar=0x%x isr=0x%x args=0x%08x.\n",
 	    cause, iar, isr, (int)trapArgs);
   // If the TRAP_INSTR bit is set, this was from a trap instruction.
   // If the bit isn't set, this was a system interrupt.
@@ -509,18 +512,24 @@ dointerrupt (unsigned int cause, unsigned int iar, unsigned int isr,
       break;
     case TRAP_KBD:
       do {
-	i = *((uint32 *)DLX_KBD_NCHARSIN);
-	result = *((uint32 *)DLX_KBD_GETCHAR);
-	printf ("Got a keyboard interrupt (char=0x%x(%c), nleft=%d)!\n",
-		result, result, i);
+        i = *((uint32 *)DLX_KBD_NCHARSIN);
+        result = *((uint32 *)DLX_KBD_GETCHAR);
+        printf ("Got a keyboard interrupt (char=0x%x(%c), nleft=%d)!\n",
+          result, result, i);
       } while (i > 1);
       break;
-    case TRAP_ACCESS:
+    case TRAP_ACCESS:      
       printf ("Exiting after illegal access at iar=0x%x, isr=0x%x\n", iar, isr);
-      dbprintf ('m', "Exiting after illegal access at iar=0x%x, isr=0x%x\n", iar, isr);     
+      dbprintf ('m', "TRAP_ACCESS:Exiting after illegal access at iar=0x%x, isr=0x%x\n", iar, isr);     
+      fault_addr =
+          currentPCB->currentSavedFrame[PROCESS_STACK_FAULT];
+
+      vpn = fault_addr >> MEM_L1FIELD_FIRST_BITNUM;
+      dbprintf('m', "TRAP_ACCESS: fault=0x%x vpn=%d maxaddr=0x%x maxvpn=%d\n", fault_addr, vpn, MEM_MAX_VIRTUAL_ADDRESS, ((MEM_MAX_VIRTUAL_ADDRESS + 1) >> MEM_L1FIELD_FIRST_BITNUM) - 1);
       exitsim ();
       break;
     case TRAP_ADDRESS:
+      dbprintf ('m', "TRAP_ADDRESS:Exiting after illegal address at iar=0x%x, isr=0x%x\n", iar, isr);     
       printf ("Exiting after illegal address at iar=0x%x, isr=0x%x\n",
 	      iar, isr);
       exitsim ();
@@ -531,6 +540,7 @@ dointerrupt (unsigned int cause, unsigned int iar, unsigned int isr,
       exitsim ();
       break;
     case TRAP_PAGEFAULT:
+      dbprintf ('m', "TRAP_PAGEFAULT:Exiting after page fault at iar=0x%x, isr=0x%x\n", iar, isr);     
       MemoryPageFaultHandler(currentPCB);
       break;
     default:
