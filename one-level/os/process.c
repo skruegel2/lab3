@@ -153,7 +153,7 @@ void ProcessFreeResources (PCB *pcb) {
     }
   }
   // Need to free the system stack area as well.  
-  MemoryFreePage(pcb->sysStackArea);
+  MemoryFreePage(pcb->sysStackArea >> MEM_L1FIELD_FIRST_BITNUM);
   // Page table is statically allocated, so no need to free it.
   ProcessSetStatus (pcb, PROCESS_STATUS_FREE);
 }
