@@ -251,7 +251,7 @@ int MemoryPageFaultHandler(PCB *pcb) {
       return MEM_FAIL;
     }
     pcb->pagetable[pg_num_fault] = MemorySetupPte(newPage);
-    printf("pg_num_fault=%d pte=0x%x\n",
+    dbprintf('m',"pg_num_fault=%d pte=0x%x\n",
        pg_num_fault,
        pcb->pagetable[pg_num_fault]);    
     pcb->npages++;
