@@ -7084,4 +7084,4 @@ Exiting at program request.
 Instructions executed: 4766598
 Time simulated: 4.767 secs
 Real time elapsed: 0.141 secs
-Execution rate: 33.74M simulated instructions per real second.
+Execution rate: 33.91M simulated instructions per real second.
