@@ -237,9 +237,13 @@ int MemoryPageFaultHandler(PCB *pcb) {
   // then this is valid stack growth and we need to allocate a new page for the stack.
   if ((pg_num_fault == pg_num_sp) || 
       (pg_num_fault == (pg_num_sp + 1))) {
-    dbprintf ('m', "MemoryPageFaultHandler: allocating new page for stack\n");
+    if (pcb->pagetable[pg_num_fault] & MEM_PTE_VALID) {
+      dbprintf ('m', "MemoryPageFaultHandler: page already allocated for stack\n");
+      return MEM_SUCCESS;
+    }
     // Allocate new page for stack. If this fails, kill process.
     // If success, setup pte and increment npages.
+    dbprintf ('m', "MemoryPageFaultHandler: allocating new page for stack\n");
     newPage = MemoryAllocPage();
     if (newPage == 0) {
       dbprintf ('m', "MemoryPageFaultHandler: could not allocate new page for stack\n");
