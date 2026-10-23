@@ -1,1 +1,1 @@
-dlxsim -D m -x os.dlx.obj -a -D m -u hello_world.dlx.obj > log
+dlxsim -D m -x os.dlx.obj -a -D m -u hello_world.dlx.obj > ./../log.txt

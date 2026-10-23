@@ -536,8 +536,8 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
     // STUDENT: setup the initial user stack pointer here as the top
     // of the process's virtual address space (4-byte aligned).
     //----------------------------------------------------------------------
-    stackframe[PROCESS_STACK_USER_STACKPOINTER] = (uint32)(MEM_MAX_VIRTUAL_ADDRESS & 0xFFFFFFFC);
-    dbprintf("USER SP = 0x%x\n", stackframe[PROCESS_STACK_USER_STACKPOINTER]);
+    stackframe[PROCESS_STACK_USER_STACKPOINTER] = (uint32)(0x3ffffc);
+    dbprintf('m',"USER SP = 0x%x\n", stackframe[PROCESS_STACK_USER_STACKPOINTER]);
     //--------------------------------------------------------------------
     // This part is setting up the initial user stack with argc and argv.
     //--------------------------------------------------------------------
