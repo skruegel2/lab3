@@ -465,7 +465,7 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
     printf ("aFATAL: couldn't allocate memory - no free pages!\n");
     exitsim ();	// NEVER RETURNS!
   }
-  pcb->pagetable[MEM_MAX_VIRTUAL_ADDRESS >> MEM_L1FIELD_FIRST_BITNUM] = MemorySetupPte (newPage);
+  pcb->pagetable[PROCESS_PT_SIZE - 1] = MemorySetupPte (newPage);
   newPage = MemoryAllocPage ();
   if (newPage == 0) {
     printf ("bFATAL: couldn't allocate system stack - no free pages!\n");
@@ -507,7 +507,7 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
   //----------------------------------------------------------------------
   stackframe[PROCESS_STACK_PTBASE] = (uint32)&(pcb->pagetable[0]);
   stackframe[PROCESS_STACK_PTBITS] = (MEM_L1FIELD_FIRST_BITNUM << 16) | MEM_L1FIELD_FIRST_BITNUM;
-  stackframe[PROCESS_STACK_PTSIZE] = 1024;
+  stackframe[PROCESS_STACK_PTSIZE] = PROCESS_PT_SIZE;
   if (isUser) {
     dbprintf ('p', "About to load %s\n", name);
     fd = ProcessGetCodeInfo (name, &start, &codeS, &codeL, &dataS, &dataL);
