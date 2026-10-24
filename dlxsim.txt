@@ -1,3 +1,5 @@
 dlxsim -D m -x os.dlx.obj -a -D m -u hello_world.dlx.obj > ./../log.txt
 
 dlxsim -D m -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 100 > ./../log.txt
+
+dlxsim -D m -x os.dlx.obj -a -D m -u same_time.dlx.obj 30 > ./log.txt

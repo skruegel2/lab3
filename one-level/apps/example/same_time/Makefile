@@ -6,8 +6,8 @@
 # this way because the build procedure for all apps is basically the same.
 
 
-SRCS=test100.c
-EXEC=test100.dlx.obj
+SRCS=same_time.c
+EXEC=same_time.dlx.obj
 
 include ../Makerules
 
