@@ -16,7 +16,8 @@ void main (int argc, char *argv[])
   }
 
   Printf("same_time (%d): same_time started\n", getpid());
-
+  num_hello_world = dstrtol(argv[1], NULL, 10);
+  
   // Create semaphore to not exit this process until all other processes 
   // have signalled that they are complete.
   if ((s_procs_completed = sem_create(0)) == SYNC_FAIL) {

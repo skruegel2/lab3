@@ -18,7 +18,7 @@ void main (int argc, char *argv[])
   s_procs_completed = dstrtol(argv[1], NULL, 10);
 
   // Count to a large number
-  for (i = 0; i < 100000; i++) {
+  for (i = 0; i < 10000; i++) {
     counter ++;
   }
 
