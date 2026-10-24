@@ -1,0 +1,357 @@
+setting debug flag m
+Stack=0x1fffb8, pc starting at 0x12d08
+Got 5 arguments.
+Available memory: 0x3b768 -> 0x200000.
+Argument count is 5.
+Argument 0 is -D.
+Argument 1 is m.
+Argument 2 is -u.
+Argument 3 is same_time.dlx.obj.
+Argument 4 is 30.
+total memory: 0x200000 MemoryModuleInit
+lastosaddress = 0x3b768
+pagestart = 0x3c
+freemap has 16 entries, memory size is 0x200.
+Initialized 452 free pages.
+MemoryAllocPage
+Allocating memory, starting with page 0
+Allocated memory, from map 1, page 60, map=0xe0000000.
+MemorySetupPte
+MemoryAllocPage
+Allocating memory, starting with page 1
+Allocated memory, from map 1, page 61, map=0xc0000000.
+MemorySetupPte
+MemoryAllocPage
+Allocating memory, starting with page 1
+Allocated memory, from map 1, page 62, map=0x80000000.
+MemorySetupPte
+MemoryAllocPage
+Allocating memory, starting with page 1
+Allocated memory, from map 1, page 63, map=0x0.
+MemorySetupPte
+MemoryAllocPage
+Allocating memory, starting with page 1
+Allocated memory, from map 2, page 64, map=0xfffffffe.
+MemorySetupPte
+MemoryAllocPage
+Allocating memory, starting with page 2
+Allocated memory, from map 2, page 65, map=0xfffffffc.
+ProcessFork: pcb->sysStackArea = 0x41000
+ProcessFork: stackframe before adjustment = 0x41ffc
+ProcessFork: stackframe = 0x41ea8
+MemoryTranslateUserToSystem: page 1 offset 0
+MemoryTranslateUserToSystem: page 1 offset 76
+MemoryTranslateUserToSystem: page 1 offset 156
+MemoryTranslateUserToSystem: page 3 offset 0
+MemoryTranslateUserToSystem: page 3 offset 56
+MemoryTranslateUserToSystem: page 3 offset 92
+MemoryTranslateUserToSystem: page 3 offset 124
+MemoryTranslateUserToSystem: page 3 offset 168
+MemoryTranslateUserToSystem: page 3 offset 192
+MemoryTranslateUserToSystem: page 1 offset 212
+MemoryTranslateUserToSystem: page 1 offset 288
+MemoryTranslateUserToSystem: page 1 offset 368
+MemoryTranslateUserToSystem: page 1 offset 448
+MemoryTranslateUserToSystem: page 1 offset 528
+MemoryTranslateUserToSystem: page 1 offset 608
+MemoryTranslateUserToSystem: page 1 offset 688
+MemoryTranslateUserToSystem: page 1 offset 768
+MemoryTranslateUserToSystem: page 1 offset 848
+MemoryTranslateUserToSystem: page 1 offset 928
+MemoryTranslateUserToSystem: page 1 offset 1008
+MemoryTranslateUserToSystem: page 1 offset 1088
+MemoryTranslateUserToSystem: page 1 offset 1168
+MemoryTranslateUserToSystem: page 1 offset 1248
+MemoryTranslateUserToSystem: page 1 offset 1328
+MemoryTranslateUserToSystem: page 1 offset 1408
+MemoryTranslateUserToSystem: page 1 offset 1488
+MemoryTranslateUserToSystem: page 1 offset 1568
+MemoryTranslateUserToSystem: page 1 offset 1648
+MemoryTranslateUserToSystem: page 1 offset 1728
+MemoryTranslateUserToSystem: page 1 offset 1808
+MemoryTranslateUserToSystem: page 1 offset 1888
+MemoryTranslateUserToSystem: page 1 offset 1968
+MemoryTranslateUserToSystem: page 1 offset 2048
+MemoryTranslateUserToSystem: page 1 offset 2128
+MemoryTranslateUserToSystem: page 1 offset 2208
+MemoryTranslateUserToSystem: page 1 offset 2288
+MemoryTranslateUserToSystem: page 1 offset 2368
+MemoryTranslateUserToSystem: page 1 offset 2448
+MemoryTranslateUserToSystem: page 1 offset 2528
+MemoryTranslateUserToSystem: page 1 offset 2608
+MemoryTranslateUserToSystem: page 1 offset 2688
+MemoryTranslateUserToSystem: page 1 offset 2768
+MemoryTranslateUserToSystem: page 1 offset 2848
+MemoryTranslateUserToSystem: page 1 offset 2928
+MemoryTranslateUserToSystem: page 1 offset 3008
+MemoryTranslateUserToSystem: page 1 offset 3088
+MemoryTranslateUserToSystem: page 1 offset 3168
+MemoryTranslateUserToSystem: page 1 offset 3248
+MemoryTranslateUserToSystem: page 1 offset 3328
+MemoryTranslateUserToSystem: page 1 offset 3408
+MemoryTranslateUserToSystem: page 1 offset 3488
+MemoryTranslateUserToSystem: page 1 offset 3568
+MemoryTranslateUserToSystem: page 1 offset 3648
+MemoryTranslateUserToSystem: page 1 offset 3728
+MemoryTranslateUserToSystem: page 1 offset 3808
+MemoryTranslateUserToSystem: page 1 offset 3888
+MemoryTranslateUserToSystem: page 1 offset 3968
+MemoryTranslateUserToSystem: page 1 offset 4048
+MemoryTranslateUserToSystem: page 2 offset 0
+MemoryTranslateUserToSystem: page 2 offset 32
+MemoryTranslateUserToSystem: page 2 offset 112
+MemoryTranslateUserToSystem: page 2 offset 192
+USER SP = 0x3ffffc
+MemoryTranslateUserToSystem: page 1023 offset 3836
+MemoryTranslateUserToSystem: page 1023 offset 3820
+Translating 0x10d4
+0x10d4 => 0x3d0d4 (=afbefffc) using base1=0x3710c/12, entry 1
+Translating 0x3ffee8
+0x3ffee8 => 0x40ee8 (=00000000) using base1=0x3710c/12, entry 1023
+Translating 0x10d8
+0x10d8 => 0x3d0d8 (=001df020) using base1=0x3710c/12, entry 1
+Translating 0x10dc
+0x10dc => 0x3d0dc (=afbffff8) using base1=0x3710c/12, entry 1
+Translating 0x3ffee4
+0x3ffee4 => 0x40ee4 (=00000000) using base1=0x3710c/12, entry 1023
+Translating 0x10e0
+0x10e0 => 0x3d0e0 (=2fbd0020) using base1=0x3710c/12, entry 1
+Translating 0x10e4
+0x10e4 => 0x3d0e4 (=8fc20000) using base1=0x3710c/12, entry 1
+Translating 0x3ffeec
+0x3ffeec => 0x40eec (=00000002) using base1=0x3710c/12, entry 1023
+Translating 0x10e8
+0x10e8 => 0x3d0e8 (=8fc30004) using base1=0x3710c/12, entry 1
+Translating 0x3ffef0
+0x3ffef0 => 0x40ef0 (=003ffef4) using base1=0x3710c/12, entry 1023
+Translating 0x10ec
+0x10ec => 0x3d0ec (=0c001008) using base1=0x3710c/12, entry 1
+Translating 0x20f8
+0x20f8 => 0x3e0f8 (=4be00000) using base1=0x3710c/12, entry 2
+Translating 0x10f0
+0x10f0 => 0x3d0f0 (=54000000) using base1=0x3710c/12, entry 1
+Translating 0x10f4
+0x10f4 => 0x3d0f4 (=20040000) using base1=0x3710c/12, entry 1
+Translating 0x10f8
+0x10f8 => 0x3d0f8 (=64410002) using base1=0x3710c/12, entry 1
+Translating 0x10fc
+0x10fc => 0x3d0fc (=10200030) using base1=0x3710c/12, entry 1
+Translating 0x1130
+0x1130 => 0x3d130 (=0c000158) using base1=0x3710c/12, entry 1
+Translating 0x128c
+0x128c => 0x3d28c (=44000431) using base1=0x3710c/12, entry 1
+Interrupt cause=0x8000431 iar=0x1290 isr=0x100 args=0x003ffecc.
+Translating 0x1290
+0x1290 => 0x3d290 (=4be00000) using base1=0x3710c/12, entry 1
+Translating 0x1134
+0x1134 => 0x3d134 (=54000000) using base1=0x3710c/12, entry 1
+Translating 0x1138
+0x1138 => 0x3d138 (=23bdfff8) using base1=0x3710c/12, entry 1
+Translating 0x113c
+0x113c => 0x3d13c (=3c050000) using base1=0x3710c/12, entry 1
+Translating 0x1140
+0x1140 => 0x3d140 (=24a53038) using base1=0x3710c/12, entry 1
+Translating 0x1144
+0x1144 => 0x3d144 (=afa50000) using base1=0x3710c/12, entry 1
+Translating 0x3ffec4
+0x3ffec4 => 0x40ec4 (=00000000) using base1=0x3710c/12, entry 1023
+Translating 0x1148
+0x1148 => 0x3d148 (=afa10004) using base1=0x3710c/12, entry 1
+Translating 0x3ffec8
+0x3ffec8 => 0x40ec8 (=00000000) using base1=0x3710c/12, entry 1023
+Translating 0x114c
+0x114c => 0x3d14c (=0c000130) using base1=0x3710c/12, entry 1
+Translating 0x1280
+0x1280 => 0x3d280 (=44000201) using base1=0x3710c/12, entry 1
+Interrupt cause=0x8000201 iar=0x1284 isr=0x100 args=0x003ffec4.
+MemoryTranslateUserToSystem: page 1023 offset 3780
+MemoryTranslateUserToSystem: page 3 offset 56
+MemoryTranslateUserToSystem: page 3 offset 57
+MemoryTranslateUserToSystem: page 3 offset 58
+MemoryTranslateUserToSystem: page 3 offset 59
+MemoryTranslateUserToSystem: page 3 offset 60
+MemoryTranslateUserToSystem: page 3 offset 61
+MemoryTranslateUserToSystem: page 3 offset 62
+MemoryTranslateUserToSystem: page 3 offset 63
+MemoryTranslateUserToSystem: page 3 offset 64
+MemoryTranslateUserToSystem: page 3 offset 65
+MemoryTranslateUserToSystem: page 3 offset 66
+MemoryTranslateUserToSystem: page 3 offset 67
+MemoryTranslateUserToSystem: page 3 offset 68
+MemoryTranslateUserToSystem: page 3 offset 69
+MemoryTranslateUserToSystem: page 3 offset 70
+MemoryTranslateUserToSystem: page 3 offset 71
+MemoryTranslateUserToSystem: page 3 offset 72
+MemoryTranslateUserToSystem: page 3 offset 73
+MemoryTranslateUserToSystem: page 3 offset 74
+MemoryTranslateUserToSystem: page 3 offset 75
+MemoryTranslateUserToSystem: page 3 offset 76
+MemoryTranslateUserToSystem: page 3 offset 77
+MemoryTranslateUserToSystem: page 3 offset 78
+MemoryTranslateUserToSystem: page 3 offset 79
+MemoryTranslateUserToSystem: page 3 offset 80
+MemoryTranslateUserToSystem: page 3 offset 81
+MemoryTranslateUserToSystem: page 3 offset 82
+MemoryTranslateUserToSystem: page 3 offset 83
+MemoryTranslateUserToSystem: page 3 offset 84
+MemoryTranslateUserToSystem: page 3 offset 85
+MemoryTranslateUserToSystem: page 3 offset 86
+MemoryTranslateUserToSystem: page 3 offset 87
+MemoryTranslateUserToSystem: page 3 offset 88
+MemoryTranslateUserToSystem: page 3 offset 89
+MemoryTranslateUserToSystem: page 3 offset 90
+MemoryTranslateUserToSystem: page 1023 offset 3784
+same_time (31): same_time started
+Interrupt cause=0x40 iar=0x1284 isr=0x100 args=0x003ffec4.
+Translating 0x1284
+0x1284 => 0x3d284 (=4be00000) using base1=0x3710c/12, entry 1
+Translating 0x1150
+0x1150 => 0x3d150 (=54000000) using base1=0x3710c/12, entry 1
+Translating 0x1154
+0x1154 => 0x3d154 (=20050000) using base1=0x3710c/12, entry 1
+Translating 0x1158
+0x1158 => 0x3d158 (=afa50000) using base1=0x3710c/12, entry 1
+Translating 0x3ffec4
+0x3ffec4 => 0x40ec4 (=00003038) using base1=0x3710c/12, entry 1023
+Translating 0x115c
+0x115c => 0x3d15c (=0c00015c) using base1=0x3710c/12, entry 1
+Translating 0x12bc
+0x12bc => 0x3d2bc (=44000450) using base1=0x3710c/12, entry 1
+Interrupt cause=0x8000450 iar=0x12c0 isr=0x100 args=0x003ffec4.
+MemoryTranslateUserToSystem: page 1023 offset 3780
+Interrupt cause=0x40 iar=0x12c0 isr=0x100 args=0x003ffec4.
+Translating 0x12c0
+0x12c0 => 0x3d2c0 (=4be00000) using base1=0x3710c/12, entry 1
+Translating 0x1160
+0x1160 => 0x3d160 (=54000000) using base1=0x3710c/12, entry 1
+Translating 0x1164
+0x1164 => 0x3d164 (=00011820) using base1=0x3710c/12, entry 1
+Translating 0x1168
+0x1168 => 0x3d168 (=23bd0008) using base1=0x3710c/12, entry 1
+Translating 0x116c
+0x116c => 0x3d16c (=6061ffff) using base1=0x3710c/12, entry 1
+Translating 0x1170
+0x1170 => 0x3d170 (=10200034) using base1=0x3710c/12, entry 1
+Translating 0x11a8
+0x11a8 => 0x3d1a8 (=23bdfff8) using base1=0x3710c/12, entry 1
+Translating 0x11ac
+0x11ac => 0x3d1ac (=afa30000) using base1=0x3710c/12, entry 1
+Translating 0x3ffec4
+0x3ffec4 => 0x40ec4 (=00000000) using base1=0x3710c/12, entry 1023
+Translating 0x11b0
+0x11b0 => 0x3d1b0 (=23c1ffe8) using base1=0x3710c/12, entry 1
+Translating 0x11b4
+0x11b4 => 0x3d1b4 (=afa10004) using base1=0x3710c/12, entry 1
+Translating 0x3ffec8
+0x3ffec8 => 0x40ec8 (=0000001f) using base1=0x3710c/12, entry 1023
+Translating 0x11b8
+0x11b8 => 0x3d1b8 (=0c0008b4) using base1=0x3710c/12, entry 1
+Translating 0x1a70
+0x1a70 => 0x3da70 (=afbefffc) using base1=0x3710c/12, entry 1
+Translating 0x3ffec0
+0x3ffec0 => 0x40ec0 (=00000000) using base1=0x3710c/12, entry 1023
+Translating 0x1a74
+0x1a74 => 0x3da74 (=001df020) using base1=0x3710c/12, entry 1
+Translating 0x1a78
+0x1a78 => 0x3da78 (=afbffff8) using base1=0x3710c/12, entry 1
+Translating 0x3ffebc
+0x3ffebc => 0x40ebc (=00000000) using base1=0x3710c/12, entry 1023
+Translating 0x1a7c
+0x1a7c => 0x3da7c (=2fbd0018) using base1=0x3710c/12, entry 1
+Translating 0x1a80
+0x1a80 => 0x3da80 (=afa20000) using base1=0x3710c/12, entry 1
+Translating 0x3ffeac
+0x3ffeac => 0x40eac (=00000000) using base1=0x3710c/12, entry 1023
+Translating 0x1a84
+0x1a84 => 0x3da84 (=afa30004) using base1=0x3710c/12, entry 1
+Translating 0x3ffeb0
+0x3ffeb0 => 0x40eb0 (=00000000) using base1=0x3710c/12, entry 1023
+Translating 0x1a88
+0x1a88 => 0x3da88 (=8fc10000) using base1=0x3710c/12, entry 1
+Translating 0x3ffec4
+0x3ffec4 => 0x40ec4 (=00000000) using base1=0x3710c/12, entry 1023
+Translating 0x1a8c
+0x1a8c => 0x3da8c (=68220000) using base1=0x3710c/12, entry 1
+Translating 0x1a90
+0x1a90 => 0x3da90 (=1040002c) using base1=0x3710c/12, entry 1
+Translating 0x1ac0
+0x1ac0 => 0x3dac0 (=8fc10000) using base1=0x3710c/12, entry 1
+Translating 0x3ffec4
+0x3ffec4 => 0x40ec4 (=00000000) using base1=0x3710c/12, entry 1023
+Translating 0x1ac4
+0x1ac4 => 0x3dac4 (=64220000) using base1=0x3710c/12, entry 1
+Translating 0x1ac8
+0x1ac8 => 0x3dac8 (=14400020) using base1=0x3710c/12, entry 1
+Translating 0x1acc
+0x1acc => 0x3dacc (=54000000) using base1=0x3710c/12, entry 1
+Translating 0x1ad0
+0x1ad0 => 0x3dad0 (=8fc10004) using base1=0x3710c/12, entry 1
+Translating 0x3ffec8
+0x3ffec8 => 0x40ec8 (=003ffed4) using base1=0x3710c/12, entry 1023
+Translating 0x1ad4
+0x1ad4 => 0x3dad4 (=20220001) using base1=0x3710c/12, entry 1
+Translating 0x1ad8
+0x1ad8 => 0x3dad8 (=afc20004) using base1=0x3710c/12, entry 1
+Translating 0x3ffec8
+0x3ffec8 => 0x40ec8 (=003ffed4) using base1=0x3710c/12, entry 1023
+Translating 0x1adc
+0x1adc => 0x3dadc (=20020030) using base1=0x3710c/12, entry 1
+Translating 0x1ae0
+0x1ae0 => 0x3dae0 (=a0220000) using base1=0x3710c/12, entry 1
+Translating 0x3ffed4
+0x3ffed4 => 0x40ed4 (=00000000) using base1=0x3710c/12, entry 1023
+Translating 0x3ffed4
+0x3ffed4 => 0x40ed4 (=00000000) using base1=0x3710c/12, entry 1023
+Translating 0x1ae4
+0x1ae4 => 0x3dae4 (=080000ec) using base1=0x3710c/12, entry 1
+Translating 0x1bd4
+0x1bd4 => 0x3dbd4 (=8fc10004) using base1=0x3710c/12, entry 1
+Translating 0x3ffec8
+0x3ffec8 => 0x40ec8 (=003ffed5) using base1=0x3710c/12, entry 1023
+Translating 0x1bd8
+0x1bd8 => 0x3dbd8 (=20020000) using base1=0x3710c/12, entry 1
+Translating 0x1bdc
+0x1bdc => 0x3dbdc (=a0220000) using base1=0x3710c/12, entry 1
+Translating 0x3ffed4
+0x3ffed4 => 0x40ed4 (=30000000) using base1=0x3710c/12, entry 1023
+Translating 0x3ffed4
+0x3ffed4 => 0x40ed4 (=30000000) using base1=0x3710c/12, entry 1023
+Translating 0x1be0
+0x1be0 => 0x3dbe0 (=8fa20000) using base1=0x3710c/12, entry 1
+Translating 0x3ffeac
+0x3ffeac => 0x40eac (=00000002) using base1=0x3710c/12, entry 1023
+Translating 0x1be4
+0x1be4 => 0x3dbe4 (=8fa30004) using base1=0x3710c/12, entry 1
+Translating 0x3ffeb0
+0x3ffeb0 => 0x40eb0 (=00000000) using base1=0x3710c/12, entry 1023
+Translating 0x1be8
+0x1be8 => 0x3dbe8 (=8fdffff8) using base1=0x3710c/12, entry 1
+Translating 0x3ffebc
+0x3ffebc => 0x40ebc (=000011bc) using base1=0x3710c/12, entry 1023
+Translating 0x1bec
+0x1bec => 0x3dbec (=001ee820) using base1=0x3710c/12, entry 1
+Translating 0x1bf0
+0x1bf0 => 0x3dbf0 (=8fdefffc) using base1=0x3710c/12, entry 1
+Translating 0x3ffec0
+0x3ffec0 => 0x40ec0 (=003ffeec) using base1=0x3710c/12, entry 1023
+Translating 0x1bf4
+0x1bf4 => 0x3dbf4 (=4be00000) using base1=0x3710c/12, entry 1
+Translating 0x11bc
+0x11bc => 0x3d1bc (=54000000) using base1=0x3710c/12, entry 1
+Translating 0x11c0
+0x11c0 => 0x3d1c0 (=23bd0008) using base1=0x3710c/12, entry 1
+Translating 0x11c4
+0x11c4 => 0x3d1c4 (=20020000) using base1=0x3710c/12, entry 1
+Translating 0x11c8
+0x11c8 => 0x3d1c8 (=08000064) using base1=0x3710c/12, entry 1
+Translating 0x1230
+0x1230 => 0x3d230 (=0c000eb8) using base1=0x3710c/12, entry 1
+Translating 0x20ec
+0x20ec => 0x3e0ec (=44000300) using base1=0x3710c/12, entry 2
+Interrupt cause=0x8000300 iar=0x20f0 isr=0x100 args=0x003ffecc.
+No runnable processes - exiting!
+Exiting at program request.
+Instructions executed: 3951451
+Time simulated: 3.951 secs
+Real time elapsed: 0.102 secs
+Execution rate: 38.88M simulated instructions per real second.
