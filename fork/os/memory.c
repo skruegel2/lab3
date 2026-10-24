@@ -12,6 +12,7 @@
 #include "queue.h"
 
 static uint32 freemap[(512 + 31)/32];
+uint32 ref_count[512 + 31];  // Number of pages
 static uint32 pagestart;
 static int nfreepages;
 static int freemapmax;
@@ -94,6 +95,10 @@ void MemoryModuleInit() {
   for (curpage = pagestart; curpage < maxpage; curpage++) {
     nfreepages += 1;
     MemorySetFreemap (curpage, 1);
+  }
+  // Init ref count array to 0
+  for (curpage = 0; curpage < maxpage; curpage++) {
+    ref_count[curpage] = 0;
   }
   dbprintf ('m', "Initialized %d free pages.\n", nfreepages);
 }

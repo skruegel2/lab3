@@ -52,6 +52,7 @@ int ProcessGetCodeInfo(const char *file, uint32 *startAddr, uint32 *codeStart, u
                        uint32 *dataStart, uint32 *dataSize);
 int ProcessGetFromFile(int fd, unsigned char *buf, uint32 *addr, int max);
 uint32 get_argument(char *string);
+extern uint32 ref_count[512 + 31];  // Number of pages
 
 
 
@@ -357,7 +358,56 @@ static void ProcessExit () {
   exit ();
 }
 
-
+//----------------------------------------------------------------------
+//
+//	ProcessRealFork
+//
+//----------------------------------------------------------------------
+void ProcessRealFork(void) {
+  dbprintf('p', "Entering ProcessRealFork\n");
+  uint32 *stackframe;      // Stores address of current stack frame.
+  int newPage;             // Used for allocating pages for the new process.
+  PCB *pcb;                // Holds pcb while we build it for this process.
+  int intrs;               // Stores previous interrupt settings.
+  uint32  initial_user_params[MAX_ARGS+2]; // Initial memory for user parameters (argc, argv)
+                                           // initial_user_params[0] = argc
+                                           // initial_user_params[1] = argv, points to initial_user_params[2]
+                                           // initial_user_params[2] = address of string for argv[0]
+                                           // initial_user_params[3] = address of string for argv[1]
+                                           //                           ...
+  uint32 argc=0;           // running counter for number of arguments
+  uint32 offset;           // Used in parsing command line argument strings, holds offset (in bytes) from 
+                           // beginning of the string to the current argument.
+  int idx;                 // Loop index for page table copy
+  int newpage;             // Allocate new page
+
+  intrs = DisableIntrs ();
+  dbprintf ('I', "Old interrupt value was 0x%x.\n", intrs);
+
+  // Get a free PCB for the child process
+  if (AQueueEmpty(&freepcbs)) {
+    printf ("FATAL error: no free processes!\n");
+    exitsim ();	// NEVER RETURNS!
+  }
+  childPcb = (PCB *)AQueueObject(AQueueFirst (&freepcbs));
+  dbprintf ('p', "Got a link @ 0x%x\n", (int)(childPcb->l));
+  if (AQueueRemove (&(childPcb->l)) != QUEUE_SUCCESS) {
+    printf("FATAL ERROR: could not remove link from freepcbsQueue in ProcessFork!\n");
+    exitsim();
+  }
+  // Copy pcb from currentPCB to new pcb.  This includes the stack pointer, saved frame, and other fields.
+  bcopy((char *)currentPCB, (char *)childPcb, sizeof(PCB));
+  // Get current process's pcb and copy its page table to the new pcb.  Also, increment the reference count for each page.
+  for (idx = 0; idx < PROCESS_PT_SIZE; idx++) {
+    childPcb->pagetable[idx] = currentPCB->pagetable[idx];
+    if ((childPcb->pagetable[idx] & MEM_PTE_VALID) != 0) {
+      ref_count[childPcb->pagetable[idx] >> MEM_L1FIELD_FIRST_BITNUM]++;
+    }
+  }
+
+  dbprintf('p', "Leaving ProcessRealFork\n");
+}
+
 //----------------------------------------------------------------------
 //
 //	ProcessFork
