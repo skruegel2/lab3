@@ -368,7 +368,7 @@ dointerrupt (unsigned int cause, unsigned int iar, unsigned int isr,
       break;
     case TRAP_PROCESS_FORK:      
       dbprintf ('t', "Got a fork trap!\n");
-      ProcessFork (trapArgs[0], trapArgs[1], (char *)trapArgs[2], trapArgs[3]);
+      ProcessRealFork();
       break;
     case TRAP_PROCESS_SLEEP:
       dbprintf ('t', "Got a process sleep trap!\n");
@@ -561,6 +561,48 @@ dointerrupt (unsigned int cause, unsigned int iar, unsigned int isr,
       else {
         // Unrelated memory access error
         dbprintf('p', "Exiting after illegal access\n");
+        ProcessKill();  // Prevents infinite loop
+      }
+      break;
+    case TRAP_ROP_ACCESS:
+      // Similar to TRAP_ACCESS
+      fault_addr = currentPCB->currentSavedFrame[PROCESS_STACK_FAULT];
+      vpn = fault_addr >> MEM_L1FIELD_FIRST_BITNUM;
+      pte = currentPCB->pagetable[vpn];
+      ppn = pte >> MEM_L1FIELD_FIRST_BITNUM;
+
+      dbprintf('p', "TRAP_ROP_ACCESS: fault = 0x%x vpn = 0x%x, ppn = 0x%x", fault_addr, vpn, ppn);
+
+      // Check for read only and valid
+      if ((pte & MEM_PTE_VALID) && (pte & MEM_PTE_READONLY)) {
+        // If more than one process is using this page, allocate another
+        if (ref_count[ppn] > 1) {
+          dbprintf('p', "TRAP_ROP_ACCESS: allocating new page\n");
+          newPage = MemoryAllocPage();
+          if (newPage == 0) {
+            dbprintf('p', "Unable to allocate\n");
+            ProcessKill();
+            break;
+          }
+          // Copy the data from the old to the new page
+          bcopy((char*)(ppn * MEM_PAGE_SIZE), (char*)(newPage * MEM_PAGE_SIZE), MEM_PAGE_SIZE);
+
+          // Update the page table to point at new page.  Clear readonly bit.
+          currentPCB->pagetable[vpn] = (newPage * MEM_PAGE_SIZE) | MEM_PTE_VALID;
+
+          // Adjust old ref count
+          ref_count[ppn]--;
+        }
+        else {
+          // Only one process using page
+          dbprintf('m', "TRAP_ROP_ACCESS: only one process using page.\n");
+          currentPCB->pagetable[vpn] &= ~MEM_PTE_READONLY;
+        }
+      }
+      else {
+          // Some other cause of the access error
+          dbprintf('p', "Illegal read only access error\n");
+          ProcessKill();
       }
       break;
     case TRAP_ADDRESS:
