@@ -90,6 +90,14 @@ _process_create:
 	nop
 .endproc _process_create
 
+.proc _fork
+.global _fork
+_fork:
+		trap	#0x430
+		jr		r31
+		nop
+.endproc
+
 .proc _shmget
 .global _shmget
 _shmget:

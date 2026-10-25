@@ -361,8 +361,9 @@ dointerrupt (unsigned int cause, unsigned int iar, unsigned int isr,
       ProcessSchedule ();
       ClkResetProcess();
       break;
-    case TRAP_PROCESS_FORK:
+    case TRAP_PROCESS_FORK:      
       dbprintf ('t', "Got a fork trap!\n");
+      ProcessFork (trapArgs[0], trapArgs[1], (char *)trapArgs[2], trapArgs[3]);
       break;
     case TRAP_PROCESS_SLEEP:
       dbprintf ('t', "Got a process sleep trap!\n");

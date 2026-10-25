@@ -24,6 +24,7 @@
 #define MEM_MAX_VIRTUAL_ADDRESS (MEM_MAX_VIRT_SIZE - 1) // Maximum virtual address
 #define MEM_PTE_VALID 0x00000001 // Page table entry is valid
 #define MEM_PTE_DIRTY 0x00000002 // Page table entry is dirty
+#define MEM_PTE_READONLY 0x00000004 // Page table entry is read-only
 #define MEM_PAGE_SIZE 4096	// Size of a page in bytes
 #define MEM_ADDRESS_OFFSET_MASK 0x00000FFF // Mask to get offset within a page
 #define MEM_PTE_MASK 0xFFFFF000 // Mask to get the page frame address from a PTE

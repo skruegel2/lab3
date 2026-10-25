@@ -1,104 +1,324 @@
-Stack=0x1fffc8, pc starting at 0x12d08
-Got 3 arguments.
-Available memory: 0x3b768 -> 0x200000.
-Argument count is 3.
-Argument 0 is -u.
-Argument 1 is same_time.dlx.obj.
-Argument 2 is 30.
-same_time (31): same_time started
-same_time (31): Creating hello world #0
-same_time (31): Creating hello world #1
-same_time (31): Creating hello world #2
-same_time (31): Creating hello world #3
-same_time (31): Creating hello world #4
-hello_world start counting(30)
-hello_world start counting(29)
-hello_world start counting(28)
-hello_world start counting(27)
-same_time (31): Creating hello world #5
-same_time (31): Creating hello world #6
-same_time (31): Creating hello world #7
-same_time (31): Creating hello world #8
-same_time (31): Creating hello world #9
-hello_world start counting(26)
-hello_world start counting(25)
-hello_world start counting(24)
-hello_world start counting(23)
-hello_world start counting(22)
-hello_world start counting(21)
-same_time (31): Creating hello world #10
-same_time (31): Creating hello world #11
-same_time (31): Creating hello world #12
-same_time (31): Creating hello world #13
-same_time (31): Creating hello world #14
-hello_world start counting(20)
-hello_world start counting(19)
-hello_world start counting(18)
-hello_world start counting(17)
-hello_world start counting(16)
-same_time (31): Creating hello world #15
-same_time (31): Creating hello world #16
-same_time (31): Creating hello world #17
-same_time (31): Creating hello world #18
-same_time (31): Creating hello world #19
-hello_world start counting(15)
-hello_world start counting(14)
-hello_world start counting(13)
-hello_world start counting(12)
-hello_world start counting(11)
-same_time (31): Creating hello world #20
-same_time (31): Creating hello world #21
-same_time (31): Creating hello world #22
-same_time (31): Creating hello world #23
-same_time (31): Creating hello world #24
-hello_world start counting(10)
-hello_world start counting(9)
-hello_world start counting(8)
-hello_world start counting(7)
-hello_world start counting(6)
-same_time (31): Creating hello world #25
-same_time (31): Creating hello world #26
-same_time (31): Creating hello world #27
-same_time (31): Creating hello world #28
-same_time (31): Creating hello world #29
-hello_world start counting(5)
-hello_world start counting(4)
-hello_world start counting(3)
-hello_world start counting(2)
-hello_world start counting(1)
-hello_world  finished counting(30)
-hello_world  finished counting(29)
-hello_world  finished counting(28)
-hello_world  finished counting(27)
-hello_world  finished counting(26)
-hello_world  finished counting(25)
-hello_world  finished counting(24)
-hello_world  finished counting(23)
-hello_world  finished counting(22)
-hello_world  finished counting(21)
-hello_world  finished counting(20)
-hello_world  finished counting(19)
-hello_world  finished counting(18)
-hello_world  finished counting(17)
-hello_world  finished counting(16)
-hello_world  finished counting(15)
-hello_world  finished counting(14)
-hello_world  finished counting(13)
-hello_world  finished counting(12)
-hello_world  finished counting(11)
-hello_world  finished counting(10)
-hello_world  finished counting(9)
-hello_world  finished counting(8)
-hello_world  finished counting(7)
-hello_world  finished counting(6)
-hello_world  finished counting(5)
-hello_world  finished counting(4)
-hello_world  finished counting(3)
-hello_world  finished counting(2)
-hello_world  finished counting(1)
-No runnable processes - exiting!
+setting debug flag p
+Stack=0x1fffc0, pc starting at 0x13e50
+Argument 0 at 0x4 is 4 (0x3034353a).
+Got 4 arguments.
+Argument 0 at 0x3d1a0 is 250272 (0x3034353a).
+Argument 1 at 0x200000 is 2097152 (0x3034353a).
+Available memory: 0x3d1a0 -> 0x200000.
+Argument 0 at 0x4 is 4 (0x3034353a).
+Argument count is 4.
+Argument 0 at 0x0 is 0 (0x3034353a).
+Argument 1 at 0x1fffd8 is 2097112 (0x3034353a).
+Argument 0 is -D.
+Argument 0 at 0x1 is 1 (0x3034353a).
+Argument 1 at 0x1fffdc is 2097116 (0x3034353a).
+Argument 1 is p.
+Argument 0 at 0x2 is 2 (0x3034353a).
+Argument 1 at 0x1fffe0 is 2097120 (0x3034353a).
+Argument 2 is -u.
+Argument 0 at 0x3 is 3 (0x3034353a).
+Argument 1 at 0x1fffe4 is 2097124 (0x3034353a).
+Argument 3 is fork_test_1.dlx.obj.
+Argument 0 at 0xfbfa25f0 is -67492368 (0x1).
+ProcessModuleInit: -67492368
+Argument 0 at 0x0 is 0 (0x1).
+Argument 1 at 0x18e4c is 101964 (0x1).
+Initializing PCB 0 @ 0x18e4c.
+Argument 0 at 0x1 is 1 (0x1).
+Argument 1 at 0x19eb4 is 106164 (0x1).
+Initializing PCB 1 @ 0x19eb4.
+Argument 0 at 0x2 is 2 (0x1).
+Argument 1 at 0x1af1c is 110364 (0x1).
+Initializing PCB 2 @ 0x1af1c.
+Argument 0 at 0x3 is 3 (0x1).
+Argument 1 at 0x1bf84 is 114564 (0x1).
+Initializing PCB 3 @ 0x1bf84.
+Argument 0 at 0x4 is 4 (0x1).
+Argument 1 at 0x1cfec is 118764 (0x1).
+Initializing PCB 4 @ 0x1cfec.
+Argument 0 at 0x5 is 5 (0x1).
+Argument 1 at 0x1e054 is 122964 (0x1).
+Initializing PCB 5 @ 0x1e054.
+Argument 0 at 0x6 is 6 (0x1).
+Argument 1 at 0x1f0bc is 127164 (0x1).
+Initializing PCB 6 @ 0x1f0bc.
+Argument 0 at 0x7 is 7 (0x1).
+Argument 1 at 0x20124 is 131364 (0x1).
+Initializing PCB 7 @ 0x20124.
+Argument 0 at 0x8 is 8 (0x1).
+Argument 1 at 0x2118c is 135564 (0x1).
+Initializing PCB 8 @ 0x2118c.
+Argument 0 at 0x9 is 9 (0x1).
+Argument 1 at 0x221f4 is 139764 (0x1).
+Initializing PCB 9 @ 0x221f4.
+Argument 0 at 0xa is 10 (0x1).
+Argument 1 at 0x2325c is 143964 (0x1).
+Initializing PCB 10 @ 0x2325c.
+Argument 0 at 0xb is 11 (0x1).
+Argument 1 at 0x242c4 is 148164 (0x1).
+Initializing PCB 11 @ 0x242c4.
+Argument 0 at 0xc is 12 (0x1).
+Argument 1 at 0x2532c is 152364 (0x1).
+Initializing PCB 12 @ 0x2532c.
+Argument 0 at 0xd is 13 (0x1).
+Argument 1 at 0x26394 is 156564 (0x1).
+Initializing PCB 13 @ 0x26394.
+Argument 0 at 0xe is 14 (0x1).
+Argument 1 at 0x273fc is 160764 (0x1).
+Initializing PCB 14 @ 0x273fc.
+Argument 0 at 0xf is 15 (0x1).
+Argument 1 at 0x28464 is 164964 (0x1).
+Initializing PCB 15 @ 0x28464.
+Argument 0 at 0x10 is 16 (0x1).
+Argument 1 at 0x294cc is 169164 (0x1).
+Initializing PCB 16 @ 0x294cc.
+Argument 0 at 0x11 is 17 (0x1).
+Argument 1 at 0x2a534 is 173364 (0x1).
+Initializing PCB 17 @ 0x2a534.
+Argument 0 at 0x12 is 18 (0x1).
+Argument 1 at 0x2b59c is 177564 (0x1).
+Initializing PCB 18 @ 0x2b59c.
+Argument 0 at 0x13 is 19 (0x1).
+Argument 1 at 0x2c604 is 181764 (0x1).
+Initializing PCB 19 @ 0x2c604.
+Argument 0 at 0x14 is 20 (0x1).
+Argument 1 at 0x2d66c is 185964 (0x1).
+Initializing PCB 20 @ 0x2d66c.
+Argument 0 at 0x15 is 21 (0x1).
+Argument 1 at 0x2e6d4 is 190164 (0x1).
+Initializing PCB 21 @ 0x2e6d4.
+Argument 0 at 0x16 is 22 (0x1).
+Argument 1 at 0x2f73c is 194364 (0x1).
+Initializing PCB 22 @ 0x2f73c.
+Argument 0 at 0x17 is 23 (0x1).
+Argument 1 at 0x307a4 is 198564 (0x1).
+Initializing PCB 23 @ 0x307a4.
+Argument 0 at 0x18 is 24 (0x1).
+Argument 1 at 0x3180c is 202764 (0x1).
+Initializing PCB 24 @ 0x3180c.
+Argument 0 at 0x19 is 25 (0x1).
+Argument 1 at 0x32874 is 206964 (0x1).
+Initializing PCB 25 @ 0x32874.
+Argument 0 at 0x1a is 26 (0x1).
+Argument 1 at 0x338dc is 211164 (0x1).
+Initializing PCB 26 @ 0x338dc.
+Argument 0 at 0x1b is 27 (0x1).
+Argument 1 at 0x34944 is 215364 (0x1).
+Initializing PCB 27 @ 0x34944.
+Argument 0 at 0x1c is 28 (0x1).
+Argument 1 at 0x359ac is 219564 (0x1).
+Initializing PCB 28 @ 0x359ac.
+Argument 0 at 0x1d is 29 (0x1).
+Argument 1 at 0x36a14 is 223764 (0x1).
+Initializing PCB 29 @ 0x36a14.
+Argument 0 at 0x1e is 30 (0x1).
+Argument 1 at 0x37a7c is 227964 (0x1).
+Initializing PCB 30 @ 0x37a7c.
+Argument 0 at 0x1f is 31 (0x1).
+Argument 1 at 0x38ae4 is 232164 (0x1).
+Initializing PCB 31 @ 0x38ae4.
+Leaving ProcessModuleInit
+SynchModuleInit: Entering SynchModuleInit
+SynchModuleInit: Leaving SynchModuleInit
+Argument 0 at 0xfbfa25f0 is -67492368 (0x0).
+ProcessFork: -67492368
+Argument 0 at 0x0 is 0 (0x0).
+Argument 1 at 0x1ffe20 is 2096672 (0x0).
+Argument 2 at 0x1fffe4 is 2097124 (0x0).
+Argument 3 at 0x1 is 1 (0x0).
+Entering ProcessFork args=0x0 0x1ffe20 fork_test_1.dlx.obj 1
+Argument 0 at 0x39eac is 237228 (0x0).
+Got a link @ 0x39eac
+Argument 0 at 0x1fffe4 is 2097124 (0x0).
+About to load fork_test_1.dlx.obj
+Argument 0 at 0x1fffe4 is 2097124 (0x958fb40).
+Argument 1 at 0x10d4 is 4308 (0x958fb40).
+File fork_test_1.dlx.obj -> start=0x000010d4
+Argument 0 at 0x1fffe4 is 2097124 (0x958fb40).
+Argument 1 at 0x1000 is 4096 (0x958fb40).
+Argument 2 at 0xfb8 is 4024 (0x958fb40).
+File fork_test_1.dlx.obj -> code @ 0x00001000 (size=0x00000fb8)
+Argument 0 at 0x1fffe4 is 2097124 (0x958fb40).
+Argument 1 at 0x2000 is 8192 (0x958fb40).
+Argument 2 at 0x7d is 125 (0x958fb40).
+File fork_test_1.dlx.obj -> data @ 0x00002000 (size=0x0000007d)
+Argument 0 at 0x4c is 76 (0x958fb40).
+Argument 1 at 0x1000 is 4096 (0x958fb40).
+Placing 76 bytes at vaddr 00001000.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x104c is 4172 (0x958fb40).
+Placing 80 bytes at vaddr 0000104c.
+Argument 0 at 0x38 is 56 (0x958fb40).
+Argument 1 at 0x109c is 4252 (0x958fb40).
+Placing 56 bytes at vaddr 0000109c.
+Argument 0 at 0x12 is 18 (0x958fb40).
+Argument 1 at 0x2000 is 8192 (0x958fb40).
+Placing 18 bytes at vaddr 00002000.
+Argument 0 at 0x26 is 38 (0x958fb40).
+Argument 1 at 0x2014 is 8212 (0x958fb40).
+Placing 38 bytes at vaddr 00002014.
+Argument 0 at 0x19 is 25 (0x958fb40).
+Argument 1 at 0x203c is 8252 (0x958fb40).
+Placing 25 bytes at vaddr 0000203c.
+Argument 0 at 0x25 is 37 (0x958fb40).
+Argument 1 at 0x2058 is 8280 (0x958fb40).
+Placing 37 bytes at vaddr 00002058.
+Argument 0 at 0x4c is 76 (0x958fb40).
+Argument 1 at 0x10d4 is 4308 (0x958fb40).
+Placing 76 bytes at vaddr 000010d4.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1120 is 4384 (0x958fb40).
+Placing 80 bytes at vaddr 00001120.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1170 is 4464 (0x958fb40).
+Placing 80 bytes at vaddr 00001170.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x11c0 is 4544 (0x958fb40).
+Placing 80 bytes at vaddr 000011c0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1210 is 4624 (0x958fb40).
+Placing 80 bytes at vaddr 00001210.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1260 is 4704 (0x958fb40).
+Placing 80 bytes at vaddr 00001260.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x12b0 is 4784 (0x958fb40).
+Placing 80 bytes at vaddr 000012b0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1300 is 4864 (0x958fb40).
+Placing 80 bytes at vaddr 00001300.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1350 is 4944 (0x958fb40).
+Placing 80 bytes at vaddr 00001350.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x13a0 is 5024 (0x958fb40).
+Placing 80 bytes at vaddr 000013a0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x13f0 is 5104 (0x958fb40).
+Placing 80 bytes at vaddr 000013f0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1440 is 5184 (0x958fb40).
+Placing 80 bytes at vaddr 00001440.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1490 is 5264 (0x958fb40).
+Placing 80 bytes at vaddr 00001490.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x14e0 is 5344 (0x958fb40).
+Placing 80 bytes at vaddr 000014e0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1530 is 5424 (0x958fb40).
+Placing 80 bytes at vaddr 00001530.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1580 is 5504 (0x958fb40).
+Placing 80 bytes at vaddr 00001580.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x15d0 is 5584 (0x958fb40).
+Placing 80 bytes at vaddr 000015d0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1620 is 5664 (0x958fb40).
+Placing 80 bytes at vaddr 00001620.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1670 is 5744 (0x958fb40).
+Placing 80 bytes at vaddr 00001670.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x16c0 is 5824 (0x958fb40).
+Placing 80 bytes at vaddr 000016c0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1710 is 5904 (0x958fb40).
+Placing 80 bytes at vaddr 00001710.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1760 is 5984 (0x958fb40).
+Placing 80 bytes at vaddr 00001760.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x17b0 is 6064 (0x958fb40).
+Placing 80 bytes at vaddr 000017b0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1800 is 6144 (0x958fb40).
+Placing 80 bytes at vaddr 00001800.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1850 is 6224 (0x958fb40).
+Placing 80 bytes at vaddr 00001850.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x18a0 is 6304 (0x958fb40).
+Placing 80 bytes at vaddr 000018a0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x18f0 is 6384 (0x958fb40).
+Placing 80 bytes at vaddr 000018f0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1940 is 6464 (0x958fb40).
+Placing 80 bytes at vaddr 00001940.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1990 is 6544 (0x958fb40).
+Placing 80 bytes at vaddr 00001990.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x19e0 is 6624 (0x958fb40).
+Placing 80 bytes at vaddr 000019e0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1a30 is 6704 (0x958fb40).
+Placing 80 bytes at vaddr 00001a30.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1a80 is 6784 (0x958fb40).
+Placing 80 bytes at vaddr 00001a80.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1ad0 is 6864 (0x958fb40).
+Placing 80 bytes at vaddr 00001ad0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1b20 is 6944 (0x958fb40).
+Placing 80 bytes at vaddr 00001b20.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1b70 is 7024 (0x958fb40).
+Placing 80 bytes at vaddr 00001b70.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1bc0 is 7104 (0x958fb40).
+Placing 80 bytes at vaddr 00001bc0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1c10 is 7184 (0x958fb40).
+Placing 80 bytes at vaddr 00001c10.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1c60 is 7264 (0x958fb40).
+Placing 80 bytes at vaddr 00001c60.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1cb0 is 7344 (0x958fb40).
+Placing 80 bytes at vaddr 00001cb0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1d00 is 7424 (0x958fb40).
+Placing 80 bytes at vaddr 00001d00.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1d50 is 7504 (0x958fb40).
+Placing 80 bytes at vaddr 00001d50.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1da0 is 7584 (0x958fb40).
+Placing 80 bytes at vaddr 00001da0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1df0 is 7664 (0x958fb40).
+Placing 80 bytes at vaddr 00001df0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1e40 is 7744 (0x958fb40).
+Placing 80 bytes at vaddr 00001e40.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1e90 is 7824 (0x958fb40).
+Placing 80 bytes at vaddr 00001e90.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1ee0 is 7904 (0x958fb40).
+Placing 80 bytes at vaddr 00001ee0.
+Argument 0 at 0x50 is 80 (0x958fb40).
+Argument 1 at 0x1f30 is 7984 (0x958fb40).
+Placing 80 bytes at vaddr 00001f30.
+Argument 0 at 0x34 is 52 (0x958fb40).
+Argument 1 at 0x1f80 is 8064 (0x958fb40).
+Placing 52 bytes at vaddr 00001f80.
+Argument 0 at 0x38ae4 is 232164 (0x958fb40).
+Argument 1 at 0x43ea8 is 278184 (0x958fb40).
+Setting currentPCB=0x38ae4, stackframe=0x43ea8
+Argument 0 at 0x1fffe4 is 2097124 (0x958fb40).
+Leaving ProcessFork (fork_test_1.dlx.obj)
+Argument 0 at 0x1f is 31 (0x958fb40).
+Parent pid: (31)
+Argument 0 at 0x12508 is 75016 (0x3ffee0).
+Argument 1 at 0x14f is 335 (0x3ffee0).
+Exiting after illegal access at iar=0x12508, isr=0x14f
 Exiting at program request.
-Instructions executed: 94201104
-Time simulated: 94.201 secs
-Real time elapsed: 2.386 secs
-Execution rate: 39.48M simulated instructions per real second.
+Instructions executed: 3668661
+Time simulated: 3.669 secs
+Real time elapsed: 0.096 secs
+Execution rate: 38.04M simulated instructions per real second.

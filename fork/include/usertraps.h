@@ -31,6 +31,7 @@ void Exit();
 // Related to processes
 int getpid();                           //trap 0x431
 void process_create(char *exec_name, ...);  //trap 0x432
+int fork();                           //trap 0x430
 
 // Related to shared memory
 unsigned int shmget();			//trap 0x440
