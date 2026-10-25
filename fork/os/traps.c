@@ -13,6 +13,8 @@
 #include "synch.h"
 #include "clock.h"
 
+extern uint32 ref_count[512 + 31];  // Number of pages
+
 
 //----------------------------------------------------------------------
 //
@@ -341,6 +343,9 @@ dointerrupt (unsigned int cause, unsigned int iar, unsigned int isr,
 
   uint32 fault_addr;
   int vpn;
+  uint32 pte;
+  uint32 ppn;
+  uint32 newPage;
 
   dbprintf ('m',"Interrupt cause=0x%x iar=0x%x isr=0x%x args=0x%08x.\n",
 	    cause, iar, isr, (int)trapArgs);
@@ -519,15 +524,44 @@ dointerrupt (unsigned int cause, unsigned int iar, unsigned int isr,
           result, result, i);
       } while (i > 1);
       break;
-    case TRAP_ACCESS:      
-      printf ("Exiting after illegal access at iar=0x%x, isr=0x%x\n", iar, isr);
-      dbprintf ('m', "TRAP_ACCESS:Exiting after illegal access at iar=0x%x, isr=0x%x\n", iar, isr);     
-      fault_addr =
-          currentPCB->currentSavedFrame[PROCESS_STACK_FAULT];
-
+    case TRAP_ACCESS:            
+      fault_addr = currentPCB->currentSavedFrame[PROCESS_STACK_FAULT];
       vpn = fault_addr >> MEM_L1FIELD_FIRST_BITNUM;
-      dbprintf('m', "TRAP_ACCESS: fault=0x%x vpn=%d maxaddr=0x%x maxvpn=%d\n", fault_addr, vpn, MEM_MAX_VIRTUAL_ADDRESS, ((MEM_MAX_VIRTUAL_ADDRESS + 1) >> MEM_L1FIELD_FIRST_BITNUM) - 1);
-      exitsim ();
+      pte = currentPCB->pagetable[vpn];
+      ppn = pte >> MEM_L1FIELD_FIRST_BITNUM;
+      dbprintf('p', "TRAP_ACCESS: fault=0x%x vpn=%d ppn=0x%x\n", fault_addr, vpn, ppn);
+      // Verify copy on write
+      if ((pte & MEM_PTE_VALID) && (pte & MEM_PTE_READONLY)) {
+        // Verify more than one process sharing page
+        if (ref_count[ppn] > 1) {
+          dbprintf('p', "Trap access copy on write\n")
+          // Allocate new page
+          newPage = MemoryAllocPage();
+          if (newPage == 0) {
+            dbprintf('p', "Can't allocate\n");
+            ProcessKill();
+            break;
+          }
+          // Copy the data from the old page to the new page
+          bcopy((char*)(ppn * MEM_PAGE_SIZE), (char*)(newPage * MEM_PAGE_SIZE), MEM_PAGE_SIZE);
+
+          // Update the PTE to point to new page, mark READ/WRITE
+          currentPCB->pagetable[vpn] = (newPage * MEM_PAGE_SIZE) | MEM_PTE_VALID;
+
+          // Update reference counts.  Current page count = 1, old page count decremented
+          ref_count[ppn]--;
+          ref_count[newPage] = 1;          
+        }
+        else {
+          // Only one process using page, so clear READONLY bit
+          dbprintf('p', "Trap access copy on write, but only one reference\n");
+          currentPCB->pagetable[vpn] &= 0xFFFFFFFB;
+        }
+      }
+      else {
+        // Unrelated memory access error
+        dbprintf('p', "Exiting after illegal access\n");
+      }
       break;
     case TRAP_ADDRESS:
       dbprintf ('m', "TRAP_ADDRESS:Exiting after illegal address at iar=0x%x, isr=0x%x\n", iar, isr);     

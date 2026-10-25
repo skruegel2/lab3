@@ -32,29 +32,4 @@
 #define MEM_MAX_PAGE (MEM_NUM_PAGES - 1) // Maximum page number
 #define MEM_L1FIELD_FIRST_BITNUM 12
 
-// #ifndef _memory_constants_h_
-// #define _memory_constants_h_
-
-// #define DLX_MEMSIZE_ADDRESS 0xffff0000
-// #define MEM_SUCCESS 1
-// #define MEM_FAIL -1
-
-// // 1. The 6 Allowed Hard-Coded Constants
-// #define MEM_L1FIELD_FIRST_BITNUM 12
-// #define MAX_VIRTUAL_ADDRESS 0x3FFFFF // 4 MB - 1
-// #define MEM_MAX_PHYS_MEM 0x200000    // 2 MB
-// #define MEM_PTE_READONLY 0x4
-// #define MEM_PTE_DIRTY 0x2
-// #define MEM_PTE_VALID 0x1
-
-// // 2. Computed Constants (Do Not Hard-Code)
-// // Size of a page: 0x1 shifted left by the first bitnum
-// #define MEM_PAGE_SIZE (0x1 << MEM_L1FIELD_FIRST_BITNUM)[cite: 11]
-
-// // Offset mask: page size minus 1
-// #define MEM_ADDRESS_OFFSET_MASK (MEM_PAGE_SIZE - 1)[cite: 11]
-
-// #define MEM_NUM_PAGES (MEM_MAX_PHYS_MEM / MEM_PAGE_SIZE)
-// #define MEM_MAX_PAGE (MEM_NUM_PAGES - 1)
-
 #endif	// _memory_constants_h_

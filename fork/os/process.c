@@ -414,7 +414,7 @@ void ProcessRealFork(void) {
   }
   childPCB->sysStackArea = newPage * MEM_PAGE_SIZE;
   dbprintf('p', "ProcessFork: childPCB->sysStackArea = 0x%x\n", (int)childPCB->sysStackArea);
-  bcopy((char *)currentPCB->sysStackArea, (char *)childPCB->sysStackArea, sizeof(uint32) * MEM_PAGE_SIZE);
+  bcopy((char *)currentPCB->sysStackArea, (char *)childPCB->sysStackArea, MEM_PAGE_SIZE);
 
   // Adjust the sysStackPtr to the child's system stack area.
   childPCB->sysStackPtr = ((uint32)currentPCB->sysStackPtr & MEM_ADDRESS_OFFSET_MASK) + childPCB->sysStackArea;
