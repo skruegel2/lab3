@@ -295,6 +295,11 @@ int MemoryAllocPage(void) {
   }
   freemap[mapnum] &= invert(1 << bitnum);
   v = (mapnum * 32) + bitnum;
+
+  //Set ref count for new page
+  ref_count[v] = 1;
+
+
   dbprintf ('m', "Allocated memory, from map %d, page %d, map=0x%x.\n",
 	    mapnum, v, freemap[mapnum]);
   nfreepages -= 1;
@@ -311,9 +316,18 @@ int MemoryAllocPage(void) {
 void MemoryFreePage(uint32 page)
 {
   dbprintf ('m', "MemoryFreePage\n");
-  MemorySetFreemap (page, 1);
-  nfreepages += 1;
-  dbprintf ('m',"Freed page 0x%x, %d remaining.\n", page, nfreepages);
+
+  // If ref count > 0, decrement
+  if (ref_count[page] > 0) {
+    ref_count[page]--;
+  }
+
+  // Free the memory only if no processes using it
+  if (ref_count[page] == 0) {
+    MemorySetFreemap(page, 1);
+    nfreepages++;
+    dbprintf ('m',"Freed page 0x%x, %d remaining.\n", page, nfreepages);
+  }
 }
 
 uint32 MemorySetupPte (uint32 page) {
