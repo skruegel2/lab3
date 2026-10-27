@@ -96,7 +96,7 @@ _fork:
 		trap	#0x430
 		jr		r31
 		nop
-.endproc
+.endproc _fork
 
 .proc _shmget
 .global _shmget
