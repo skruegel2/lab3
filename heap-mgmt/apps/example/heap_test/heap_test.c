@@ -33,6 +33,7 @@ void main (int argc, char *argv[])
   }
 
   // Test 3: Allocate a large block, 2000 bytes
+  Printf("Test 3: Allocate 2000 bytes\n");
   ptr3 = malloc(2000);
   if (ptr3 != 0) {
     Printf("Successfully allocated 100 bytes at virtual address 0x%d\n", (int)ptr3);
@@ -42,18 +43,19 @@ void main (int argc, char *argv[])
   }
 
   // Test 4: Free blocks
-  Printf("Freeing 40 bytes\n");
+  Printf("Test 4: Free 40 bytes\n");
   mfree(ptr1);
 
   // Test 5: Free blocks
-  Printf("Freeing 100 bytes\n");
+  Printf("Test 5: Free 100 bytes\n");
   mfree(ptr2);
 
   // Test 6: Free blocks
-  Printf("Freeing 2000 bytes\n");
+  Printf("Test 6: Free 2000 bytes\n");
   mfree(ptr3);
 
   // Test 7: out of bounds allocation
+  Printf("Test 7: Cannot allocate 5000 bytes\n");
   ptr4 = malloc(5000);
   if (ptr4 != 0) {
     Printf("ERROR: Successfully allocated 5000 blocks at virtual address 0x%d\n", (int)ptr4);

@@ -137,10 +137,10 @@ int allocate_node(int node_idx, int target_order) {
     heap_tree[right].addr = heap_tree[node_idx].addr;
 
     // prints
-    dbprintf('m', "Created a left child node (order = %d, addr = %d, size = %d) of parent (order = %d, addr = %d, size = %d)\n",
+    dbprintf ('m', "Created a left child node (order = %d, addr = %d, size = %d) of parent (order = %d, addr = %d, size = %d)\n",
             heap_tree[left].order, heap_tree[left].addr, heap_tree[left].size,
             heap_tree[node_idx].order, heap_tree[node_idx].addr, heap_tree[node_idx].size);
-    dbprintf('m', "Created a righ child node (order = %d, addr = %d, size = %d) of parent (order = %d, addr = %d, size = %d)\n",
+    dbprintf ('m', "Created a righ child node (order = %d, addr = %d, size = %d) of parent (order = %d, addr = %d, size = %d)\n",
             heap_tree[right].order, heap_tree[right].addr, heap_tree[right].size,
             heap_tree[node_idx].order, heap_tree[node_idx].addr, heap_tree[node_idx].size);
     
@@ -196,9 +196,9 @@ void* malloc(int memsize)
   paddress = MemoryTranslateUserToSystem(currentPCB, vaddress);
 
   // Required print messages
-  printf("Allocated the block: order = %d, addr = %d requested mem size = %d, block size = %d\n",
+  dbprintf ('m',"Allocated the block: order = %d, addr = %d requested mem size = %d, block size = %d\n",
         heap_tree[allocated_idx].order, heap_tree[allocated_idx].addr, memsize, heap_tree[allocated_idx].size);
-  printf("Created a heap block of size %d bytes: virtual address 0x%x, physical address 0x%x.\n",
+  dbprintf( 'm',"Created a heap block of size %d bytes: virtual address 0x%x, physical address 0x%x.\n",
         memsize, vaddress, paddress);
   return (void*)vaddress;
 }
@@ -261,9 +261,9 @@ int mfree(void *ptr)
   paddr = MemoryTranslateUserToSystem(currentPCB, vaddr);
   bytes_freed = heap_tree[curr].size;
 
-  printf("Freeing heap block of size %d bytes: virtual address 0x%x, physical address 0x%x.\n",
+  dbprintf ('m',"Freeing heap block of size %d bytes: virtual address 0x%x, physical address 0x%x.\n",
         bytes_freed, vaddr, paddr);
-  printf("Freed the block: order = %d, addr = %d, size = %d\n",
+  dbprintf ('m', "Freed the block: order = %d, addr = %d, size = %d\n",
         heap_tree[curr].order, heap_tree[curr].addr, heap_tree[curr].size);
 
   // Node now free
@@ -296,10 +296,10 @@ int mfree(void *ptr)
       heap_tree[right_node].is_free = 0;
 
       // Printfs
-      printf("Coalesced buddy nodes (order = %d, addr = %d, size = %d) & (order = %d, addr = %d, size = %d)\b",
+      dbprintf ('m', "Coalesced buddy nodes (order = %d, addr = %d, size = %d) & (order = %d, addr = %d, size = %d)\b",
             heap_tree[left_node].order, heap_tree[left_node].addr, heap_tree[left_node].size,
             heap_tree[left_node].order, heap_tree[left_node].addr, heap_tree[left_node].size);
-      printf("into the parent node (order = %d, addr = %d, size = %d)\n",
+      dbprintf ('m', "into the parent node (order = %d, addr = %d, size = %d)\n",
             heap_tree[parent].order, heap_tree[parent].addr, heap_tree[parent].size);
 
       // Move up to parent node
