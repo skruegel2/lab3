@@ -1,5 +1,5 @@
 setting debug flag m
-Stack=0x1fffc0, pc starting at 0x1667c
+Stack=0x1fffc0, pc starting at 0x16684
 Got 4 arguments.
 Available memory: 0x40900 -> 0x200000.
 Argument count is 4.
@@ -275,17 +275,17 @@ Translating 0x1488
 Interrupt cause=0x8000467 iar=0x148c isr=0x100 args=0x003ffee0.
 MemoryTranslateUserToSystem: page 1023 offset 3808
 Created a left child node (order = 6, addr = 0, size = 2048) of parent (order = 7, addr = 0, size = 4096)
-Created a righ child node (order = 6, addr = 0, size = 2048) of parent (order = 7, addr = 0, size = 4096)
+Created a righ child node (order = 6, addr = 2048, size = 2048) of parent (order = 7, addr = 0, size = 4096)
 Created a left child node (order = 5, addr = 0, size = 1024) of parent (order = 6, addr = 0, size = 2048)
-Created a righ child node (order = 5, addr = 0, size = 1024) of parent (order = 6, addr = 0, size = 2048)
+Created a righ child node (order = 5, addr = 1024, size = 1024) of parent (order = 6, addr = 0, size = 2048)
 Created a left child node (order = 4, addr = 0, size = 512) of parent (order = 5, addr = 0, size = 1024)
-Created a righ child node (order = 4, addr = 0, size = 512) of parent (order = 5, addr = 0, size = 1024)
+Created a righ child node (order = 4, addr = 512, size = 512) of parent (order = 5, addr = 0, size = 1024)
 Created a left child node (order = 3, addr = 0, size = 256) of parent (order = 4, addr = 0, size = 512)
-Created a righ child node (order = 3, addr = 0, size = 256) of parent (order = 4, addr = 0, size = 512)
+Created a righ child node (order = 3, addr = 256, size = 256) of parent (order = 4, addr = 0, size = 512)
 Created a left child node (order = 2, addr = 0, size = 128) of parent (order = 3, addr = 0, size = 256)
-Created a righ child node (order = 2, addr = 0, size = 128) of parent (order = 3, addr = 0, size = 256)
+Created a righ child node (order = 2, addr = 128, size = 128) of parent (order = 3, addr = 0, size = 256)
 Created a left child node (order = 1, addr = 0, size = 64) of parent (order = 2, addr = 0, size = 128)
-Created a righ child node (order = 1, addr = 0, size = 64) of parent (order = 2, addr = 0, size = 128)
+Created a righ child node (order = 1, addr = 64, size = 64) of parent (order = 2, addr = 0, size = 128)
 MemoryTranslateUserToSystem: page 4 offset 0
 Allocated the block: order = 1, addr = 0 requested mem size = 40, block size = 64
 Created a heap block of size 40 bytes: virtual address 0x4000, physical address 0x46000.
@@ -454,9 +454,9 @@ Translating 0x1488
 0x1488 => 0x42488 (=44000467) using base1=0x3c1e0/12, entry 1
 Interrupt cause=0x8000467 iar=0x148c isr=0x100 args=0x003ffee0.
 MemoryTranslateUserToSystem: page 1023 offset 3808
-MemoryTranslateUserToSystem: page 4 offset 0
-Allocated the block: order = 2, addr = 0 requested mem size = 100, block size = 128
-Created a heap block of size 100 bytes: virtual address 0x4000, physical address 0x46000.
+MemoryTranslateUserToSystem: page 4 offset 128
+Allocated the block: order = 2, addr = 128 requested mem size = 100, block size = 128
+Created a heap block of size 100 bytes: virtual address 0x4080, physical address 0x46080.
 Interrupt cause=0x40 iar=0x148c isr=0x100 args=0x003ffee0.
 Translating 0x148c
 0x148c => 0x4248c (=4be00000) using base1=0x3c1e0/12, entry 1
@@ -553,7 +553,7 @@ MemoryTranslateUserToSystem: page 3 offset 247
 MemoryTranslateUserToSystem: page 3 offset 248
 MemoryTranslateUserToSystem: page 3 offset 249
 MemoryTranslateUserToSystem: page 1023 offset 3812
-Successfully allocated 100 bytes at virtual address 0x16384
+Successfully allocated 100 bytes at virtual address 0x16512
 Interrupt cause=0x40 iar=0x13b4 isr=0x100 args=0x003ffee0.
 Translating 0x13b4
 0x13b4 => 0x423b4 (=4be00000) using base1=0x3c1e0/12, entry 1
@@ -624,9 +624,9 @@ Translating 0x1488
 0x1488 => 0x42488 (=44000467) using base1=0x3c1e0/12, entry 1
 Interrupt cause=0x8000467 iar=0x148c isr=0x100 args=0x003ffee0.
 MemoryTranslateUserToSystem: page 1023 offset 3808
-MemoryTranslateUserToSystem: page 4 offset 0
-Allocated the block: order = 6, addr = 0 requested mem size = 2000, block size = 2048
-Created a heap block of size 2000 bytes: virtual address 0x4000, physical address 0x46000.
+MemoryTranslateUserToSystem: page 4 offset 2048
+Allocated the block: order = 6, addr = 2048 requested mem size = 2000, block size = 2048
+Created a heap block of size 2000 bytes: virtual address 0x4800, physical address 0x46800.
 Interrupt cause=0x40 iar=0x148c isr=0x100 args=0x003ffee0.
 Translating 0x148c
 0x148c => 0x4248c (=4be00000) using base1=0x3c1e0/12, entry 1
@@ -655,7 +655,7 @@ Translating 0x3ffee0
 Translating 0x1240
 0x1240 => 0x42240 (=afa20004) using base1=0x3c1e0/12, entry 1
 Translating 0x3ffee4
-0x3ffee4 => 0x45ee4 (=00004000) using base1=0x3c1e0/12, entry 1023
+0x3ffee4 => 0x45ee4 (=00004080) using base1=0x3c1e0/12, entry 1023
 Translating 0x1244
 0x1244 => 0x42244 (=08000014) using base1=0x3c1e0/12, entry 1
 Translating 0x125c
@@ -723,7 +723,7 @@ MemoryTranslateUserToSystem: page 3 offset 247
 MemoryTranslateUserToSystem: page 3 offset 248
 MemoryTranslateUserToSystem: page 3 offset 249
 MemoryTranslateUserToSystem: page 1023 offset 3812
-Successfully allocated 100 bytes at virtual address 0x16384
+Successfully allocated 100 bytes at virtual address 0x18432
 Interrupt cause=0x40 iar=0x13b4 isr=0x100 args=0x003ffee0.
 Translating 0x13b4
 0x13b4 => 0x423b4 (=4be00000) using base1=0x3c1e0/12, entry 1
@@ -787,8 +787,10 @@ Translating 0x1490
 Interrupt cause=0x8000468 iar=0x1494 isr=0x100 args=0x003ffee0.
 MemoryTranslateUserToSystem: page 1023 offset 3808
 MemoryTranslateUserToSystem: page 4 offset 0
-Freeing heap block of size 2048 bytes: virtual address 0x4000, physical address 0x46000.
-Freed the block: order = 6, addr = 0, size = 2048
+Freeing heap block of size 64 bytes: virtual address 0x4000, physical address 0x46000.
+Freed the block: order = 1, addr = 0, size = 64
+Coalesced buddy nodes (order = 1, addr = 0, size = 64) & (order = 1, addr = 0, size = 64)
+into the parent node (order = 2, addr = 0, size = 128)
 Interrupt cause=0x40 iar=0x1494 isr=0x100 args=0x003ffee0.
 Translating 0x1494
 0x1494 => 0x42494 (=4be00000) using base1=0x3c1e0/12, entry 1
@@ -848,6 +850,17 @@ Translating 0x1490
 0x1490 => 0x42490 (=44000468) using base1=0x3c1e0/12, entry 1
 Interrupt cause=0x8000468 iar=0x1494 isr=0x100 args=0x003ffee0.
 MemoryTranslateUserToSystem: page 1023 offset 3808
+MemoryTranslateUserToSystem: page 4 offset 128
+Freeing heap block of size 128 bytes: virtual address 0x4080, physical address 0x46080.
+Freed the block: order = 2, addr = 128, size = 128
+Coalesced buddy nodes (order = 2, addr = 0, size = 128) & (order = 2, addr = 0, size = 128)
+into the parent node (order = 3, addr = 0, size = 256)
+Coalesced buddy nodes (order = 3, addr = 0, size = 256) & (order = 3, addr = 0, size = 256)
+into the parent node (order = 4, addr = 0, size = 512)
+Coalesced buddy nodes (order = 4, addr = 0, size = 512) & (order = 4, addr = 0, size = 512)
+into the parent node (order = 5, addr = 0, size = 1024)
+Coalesced buddy nodes (order = 5, addr = 0, size = 1024) & (order = 5, addr = 0, size = 1024)
+into the parent node (order = 6, addr = 0, size = 2048)
 Interrupt cause=0x40 iar=0x1494 isr=0x100 args=0x003ffee0.
 Translating 0x1494
 0x1494 => 0x42494 (=4be00000) using base1=0x3c1e0/12, entry 1
@@ -860,7 +873,7 @@ Translating 0x12b0
 Translating 0x12b4
 0x12b4 => 0x422b4 (=afa50000) using base1=0x3c1e0/12, entry 1
 Translating 0x3ffee0
-0x3ffee0 => 0x45ee0 (=00004000) using base1=0x3c1e0/12, entry 1023
+0x3ffee0 => 0x45ee0 (=00004080) using base1=0x3c1e0/12, entry 1023
 Translating 0x12b8
 0x12b8 => 0x422b8 (=0c0000f4) using base1=0x3c1e0/12, entry 1
 Translating 0x13b0
@@ -908,6 +921,11 @@ Translating 0x1490
 0x1490 => 0x42490 (=44000468) using base1=0x3c1e0/12, entry 1
 Interrupt cause=0x8000468 iar=0x1494 isr=0x100 args=0x003ffee0.
 MemoryTranslateUserToSystem: page 1023 offset 3808
+MemoryTranslateUserToSystem: page 4 offset 2048
+Freeing heap block of size 2048 bytes: virtual address 0x4800, physical address 0x46800.
+Freed the block: order = 6, addr = 2048, size = 2048
+Coalesced buddy nodes (order = 6, addr = 0, size = 2048) & (order = 6, addr = 0, size = 2048)
+into the parent node (order = 7, addr = 0, size = 4096)
 Interrupt cause=0x40 iar=0x1494 isr=0x100 args=0x003ffee0.
 Translating 0x1494
 0x1494 => 0x42494 (=4be00000) using base1=0x3c1e0/12, entry 1
@@ -920,7 +938,7 @@ Translating 0x12d0
 Translating 0x12d4
 0x12d4 => 0x422d4 (=afa50000) using base1=0x3c1e0/12, entry 1
 Translating 0x3ffee0
-0x3ffee0 => 0x45ee0 (=00004000) using base1=0x3c1e0/12, entry 1023
+0x3ffee0 => 0x45ee0 (=00004800) using base1=0x3c1e0/12, entry 1023
 Translating 0x12d8
 0x12d8 => 0x422d8 (=0c0000d4) using base1=0x3c1e0/12, entry 1
 Translating 0x13b0
@@ -1113,7 +1131,7 @@ Translating 0x147c
 Interrupt cause=0x8000500 iar=0x1480 isr=0x100 args=0x003ffee0.
 No runnable processes - exiting!
 Exiting at program request.
-Instructions executed: 4802999
-Time simulated: 4.803 secs
-Real time elapsed: 0.126 secs
-Execution rate: 38.21M simulated instructions per real second.
+Instructions executed: 4806994
+Time simulated: 4.807 secs
+Real time elapsed: 0.127 secs
+Execution rate: 37.94M simulated instructions per real second.

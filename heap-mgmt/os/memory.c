@@ -134,7 +134,7 @@ int allocate_node(int node_idx, int target_order) {
     heap_tree[right].is_split = 0;
     heap_tree[right].order = child_order;
     heap_tree[right].size = child_size;
-    heap_tree[right].addr = heap_tree[node_idx].addr;
+    heap_tree[right].addr = heap_tree[node_idx].addr +child_size;
 
     // prints
     dbprintf ('m', "Created a left child node (order = %d, addr = %d, size = %d) of parent (order = %d, addr = %d, size = %d)\n",
@@ -296,7 +296,7 @@ int mfree(void *ptr)
       heap_tree[right_node].is_free = 0;
 
       // Printfs
-      dbprintf ('m', "Coalesced buddy nodes (order = %d, addr = %d, size = %d) & (order = %d, addr = %d, size = %d)\b",
+      dbprintf ('m', "Coalesced buddy nodes (order = %d, addr = %d, size = %d) & (order = %d, addr = %d, size = %d)\n",
             heap_tree[left_node].order, heap_tree[left_node].addr, heap_tree[left_node].size,
             heap_tree[left_node].order, heap_tree[left_node].addr, heap_tree[left_node].size);
       dbprintf ('m', "into the parent node (order = %d, addr = %d, size = %d)\n",
