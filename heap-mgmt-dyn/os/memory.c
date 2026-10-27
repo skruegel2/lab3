@@ -140,7 +140,7 @@ int allocate_node(int node_idx, int target_order) {
     dbprintf ('m', "Created a left child node (order = %d, addr = %d, size = %d) of parent (order = %d, addr = %d, size = %d)\n",
             heap_tree[left].order, heap_tree[left].addr, heap_tree[left].size,
             heap_tree[node_idx].order, heap_tree[node_idx].addr, heap_tree[node_idx].size);
-    dbprintf ('m', "Created a righ child node (order = %d, addr = %d, size = %d) of parent (order = %d, addr = %d, size = %d)\n",
+    dbprintf ('m', "Created a right child node (order = %d, addr = %d, size = %d) of parent (order = %d, addr = %d, size = %d)\n",
             heap_tree[right].order, heap_tree[right].addr, heap_tree[right].size,
             heap_tree[node_idx].order, heap_tree[node_idx].addr, heap_tree[node_idx].size);
     
