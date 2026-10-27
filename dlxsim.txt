@@ -12,3 +12,5 @@ dlxsim -D m -x os.dlx.obj -a -D m -u heap_test.dlx.obj > ./../log.txt
 
 dlxsim -x os.dlx.obj -a -u heap_test.dlx.obj > ./../log.txt
 
+dlxsim -D m -x os.dlx.obj -a -D m -u dyn_heap_test.dlx.obj > ./../log.txt
+
