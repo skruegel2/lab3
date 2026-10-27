@@ -25,5 +25,6 @@ uint32 MemorySetupPte (uint32 page);
 // Put your function prototypes here
 //---------------------------------------------------------
 // All function prototypes including the malloc and mfree functions go here
-
+void* malloc(int memsize);
+int mfree(void *ptr);
 #endif	// _memory_h_

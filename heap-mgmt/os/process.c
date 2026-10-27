@@ -366,19 +366,8 @@ static void ProcessExit () {
 void ProcessRealFork(void) {
   uint32 *stackframe;      // Stores address of current stack frame.
   int newPage;             // Used for allocating pages for the new process.
-  PCB *pcb;                // Holds pcb while we build it for this process.
   int intrs;               // Stores previous interrupt settings.
-  uint32  initial_user_params[MAX_ARGS+2]; // Initial memory for user parameters (argc, argv)
-                                           // initial_user_params[0] = argc
-                                           // initial_user_params[1] = argv, points to initial_user_params[2]
-                                           // initial_user_params[2] = address of string for argv[0]
-                                           // initial_user_params[3] = address of string for argv[1]
-                                           //                           ...
-  uint32 argc=0;           // running counter for number of arguments
-  uint32 offset;           // Used in parsing command line argument strings, holds offset (in bytes) from 
-                           // beginning of the string to the current argument.
   int idx;                 // Loop index for page table copy
-  int newpage;             // Allocate new page
   PCB *childPCB;           // Pointer to child process's PCB
   dbprintf('p', "Entering ProcessRealFork\n");
 
@@ -417,10 +406,10 @@ void ProcessRealFork(void) {
   bcopy((char *)currentPCB->sysStackArea, (char *)childPCB->sysStackArea, MEM_PAGE_SIZE);
 
   // Adjust the sysStackPtr to the child's system stack area.
-  childPCB->sysStackPtr = ((uint32)currentPCB->sysStackPtr & MEM_ADDRESS_OFFSET_MASK) + childPCB->sysStackArea;
+  childPCB->sysStackPtr = (uint32*)(((uint32)currentPCB->sysStackPtr & MEM_ADDRESS_OFFSET_MASK) + childPCB->sysStackArea);
 
   // Adjust the currentSavedFrame to the child's system stack area.
-  childPCB->currentSavedFrame = ((uint32)currentPCB->currentSavedFrame & MEM_ADDRESS_OFFSET_MASK) + childPCB->sysStackArea;
+  childPCB->currentSavedFrame = (uint32*)(((uint32)currentPCB->currentSavedFrame & MEM_ADDRESS_OFFSET_MASK) + childPCB->sysStackArea);
 
   // Adjust th PROCESS_STACK_PTBASE in the child's stack frame to point to the child's page table.
   stackframe = childPCB->sysStackPtr;
@@ -536,7 +525,7 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
   // equal to the last 4-byte-aligned address in physical page
   // for the system stack.
   //---------------------------------------------------------
-  pcb->npages = 5;
+  pcb->npages = 6;
   // Set up 4 pages for user code and global data.
   newPage = MemoryAllocPage ();
   if (newPage == 0) {
@@ -568,6 +557,13 @@ int ProcessFork (VoidFunc func, uint32 param, char *name, int isUser) {
     exitsim ();	// NEVER RETURNS!
   }
   pcb->pagetable[PROCESS_PT_SIZE - 1] = MemorySetupPte (newPage);
+  // Heap
+  newPage = MemoryAllocPage();
+  if (newPage == 0) {
+    printf ("aFATAL: couldn't allocate memory - no free pages!\n");
+    exitsim ();	// NEVER RETURNS!
+  }
+  pcb->pagetable[4] = MemorySetupPte (newPage);
   newPage = MemoryAllocPage ();
   if (newPage == 0) {
     printf ("bFATAL: couldn't allocate system stack - no free pages!\n");

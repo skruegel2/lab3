@@ -11,11 +11,50 @@
 #include "memory.h"
 #include "queue.h"
 
+#define HEAP_MAX_SIZE 4096
+#define HEAP_MIN_BLOCK 32
+#define HEAP_MAX_ORDER 7
+#define NUM_TREE_NODES 255
+
 static uint32 freemap[(512 + 31)/32];
 uint32 ref_count[512 + 31];  // Number of pages
 static uint32 pagestart;
 static int nfreepages;
 static int freemapmax;
+
+typedef struct {
+    int is_free;      // 1 if free, 0 if allocated/split
+    int is_split;     // 1 if split into children
+    int size;         // Size of the block
+    int order;        // Order (0 to 7)
+    int addr;         // Offset from the start of the heap
+} BuddyNode;
+
+// Global buddy tree for the current process (assuming 1 process for simplicity here, 
+// normally this might go in the PCB or a 2D array if supporting multiple processes)
+static BuddyNode heap_tree[NUM_TREE_NODES];
+static int heap_initialized = 0;
+
+// Helper to get left child index
+static inline int get_left_child(int index) { return 2 * index + 1; }
+// Helper to get right child index
+static inline int get_right_child(int index) { return 2 * index + 2; }
+// Helper to get parent index
+static inline int get_parent(int index) { return (index - 1) / 2; }
+
+void InitHeapTree() {
+    int i;
+    for (i = 0; i < NUM_TREE_NODES; i++) {
+        heap_tree[i].is_free = 0;
+        heap_tree[i].is_split = 0;
+    }
+    // Initialize root node
+    heap_tree[0].is_free = 1;
+    heap_tree[0].size = HEAP_MAX_SIZE;
+    heap_tree[0].order = HEAP_MAX_ORDER;
+    heap_tree[0].addr = 0;
+    heap_initialized = 1;
+}
 
 //----------------------------------------------------------------------
 //
@@ -43,6 +82,234 @@ static inline uint32 invert (uint32 n) {
 uint32 MemoryGetSize() {
   dbprintf ('m', "total memory: 0x%x ", *((int *)DLX_MEMSIZE_ADDRESS) );
   return (*((int *)DLX_MEMSIZE_ADDRESS));
+}
+
+//----------------------------------------------------------------------
+//
+//	allocate_node: find block
+//
+//----------------------------------------------------------------------
+int allocate_node(int node_idx, int target_order) {
+  int left_res;
+  int left;
+  int right;
+  int child_order;
+  int child_size;
+
+  // If node split, try children
+  if (heap_tree[node_idx].is_split) {
+    left_res = allocate_node(get_left_child(node_idx), target_order);
+    if (left_res != -1) {
+      return left_res;
+    }  
+    return allocate_node(get_right_child(node_idx), target_order);
+  }
+
+  // Node not split
+  if (heap_tree[node_idx].is_free && heap_tree[node_idx].order >= target_order) {
+    // Correct size
+    if (heap_tree[node_idx].order == target_order) {
+      heap_tree[node_idx].is_free = 0;
+      return node_idx;
+    }
+
+    // Not correct size so split
+    heap_tree[node_idx].is_free = 0;
+    heap_tree[node_idx].is_split = 1;
+
+    left = get_left_child(node_idx);
+    right = get_right_child(node_idx);
+    child_order = heap_tree[node_idx].order-1;
+    child_size = heap_tree[node_idx].size / 2;
+
+    // Left child
+    heap_tree[left].is_free = 1;
+    heap_tree[left].is_split = 0;
+    heap_tree[left].order = child_order;
+    heap_tree[left].size = child_size;
+    heap_tree[left].addr = heap_tree[node_idx].addr;
+
+    // Right child
+    heap_tree[right].is_free = 1;
+    heap_tree[right].is_split = 0;
+    heap_tree[right].order = child_order;
+    heap_tree[right].size = child_size;
+    heap_tree[right].addr = heap_tree[node_idx].addr;
+
+    // prints
+    dbprintf('m', "Created a left child node (order = %d, addr = %d, size = %d) of parent (order = %d, addr = %d, size = %d)\n",
+            heap_tree[left].order, heap_tree[left].addr, heap_tree[left].size,
+            heap_tree[node_idx].order, heap_tree[node_idx].addr, heap_tree[node_idx].size);
+    dbprintf('m', "Created a righ child node (order = %d, addr = %d, size = %d) of parent (order = %d, addr = %d, size = %d)\n",
+            heap_tree[right].order, heap_tree[right].addr, heap_tree[right].size,
+            heap_tree[node_idx].order, heap_tree[node_idx].addr, heap_tree[node_idx].size);
+    
+    // Allocate in left child
+    return allocate_node(left, target_order);    
+  }
+  // Can't allocate
+  return -1;
+}
+//----------------------------------------------------------------------
+//
+//	malloc
+//
+//----------------------------------------------------------------------
+void* malloc(int memsize)
+{
+  int adjusted_size;
+  int req_size;
+  int target_order;
+  int allocated_idx;
+  uint32 vaddress;
+  uint32 paddress;
+
+  if (!heap_initialized) {
+    InitHeapTree();
+  }
+
+  if ((memsize <= 0) || (memsize > HEAP_MAX_SIZE)) {
+    return NULL;
+  }
+
+  // Block size multiple of 4
+  adjusted_size = memsize;
+  if (adjusted_size % 4 != 0) {
+    adjusted_size += (4 - (adjusted_size % 4));
+  }
+
+  req_size = HEAP_MIN_BLOCK;
+  target_order = 0;
+  while (req_size < adjusted_size) {
+    req_size *= 2;
+    target_order++;
+  }
+
+  allocated_idx = allocate_node(0, target_order);
+  if (allocated_idx == -1) {
+    // No blocks large enough
+    return NULL;  
+  }
+
+  // Heap starts at virtual page 4
+  vaddress = (4 * MEM_PAGE_SIZE) + heap_tree[allocated_idx].addr;
+  paddress = MemoryTranslateUserToSystem(currentPCB, vaddress);
+
+  // Required print messages
+  printf("Allocated the block: order = %d, addr = %d requested mem size = %d, block size = %d\n",
+        heap_tree[allocated_idx].order, heap_tree[allocated_idx].addr, memsize, heap_tree[allocated_idx].size);
+  printf("Created a heap block of size %d bytes: virtual address 0x%x, physical address 0x%x.\n",
+        memsize, vaddress, paddress);
+  return (void*)vaddress;
+}
+
+//----------------------------------------------------------------------
+//
+//	mfree
+//
+//----------------------------------------------------------------------
+int mfree(void *ptr)
+{
+  uint32 heap_base;
+  uint32 vaddr;
+  uint32 paddr;
+  int target_addr;
+  int curr;
+  int left;
+  int right;
+  int bytes_freed;
+  int buddy;
+  int parent;
+  int left_node;
+  int right_node;
+
+  if (ptr == NULL) {
+    return -1;
+  }
+
+  // Calculate the heap offset (starts at virtual page 4)
+  heap_base = 4 * MEM_PAGE_SIZE;
+  vaddr = (uint32)ptr;
+
+  // Error if ptr not in heap
+  if ((vaddr < heap_base) || (vaddr >= heap_base + HEAP_MAX_SIZE)) {
+    return -1;
+  }
+
+  target_addr = vaddr - heap_base;
+
+  // Search in buddy tree
+  curr = 0;
+  while (heap_tree[curr].is_split) {
+    left = get_left_child(curr);
+    right = get_right_child(curr);
+    // Select the correct side
+    if (target_addr >= heap_tree[right].addr) {
+      curr = right;
+    }
+    else {
+      curr = left;
+    }
+  }
+
+  // Verify block is allocated and address match
+  if (heap_tree[curr].is_free || heap_tree[curr].addr != target_addr) {
+    return -1;
+  }
+
+  // Output free messages
+  paddr = MemoryTranslateUserToSystem(currentPCB, vaddr);
+  bytes_freed = heap_tree[curr].size;
+
+  printf("Freeing heap block of size %d bytes: virtual address 0x%x, physical address 0x%x.\n",
+        bytes_freed, vaddr, paddr);
+  printf("Freed the block: order = %d, addr = %d, size = %d\n",
+        heap_tree[curr].order, heap_tree[curr].addr, heap_tree[curr].size);
+
+  // Node now free
+  heap_tree[curr].is_free = 1;
+
+  // Rejoin buddies if possible, recursively
+  while (curr > 0) {
+    parent = get_parent(curr);
+
+    // Get index
+    if (curr % 2 != 0) {
+      buddy = curr + 1; // buddy is right node
+    }
+    else {
+      buddy = curr - 1; // buddy is left node
+    }
+
+    // Buddy free and not split?
+    if (heap_tree[buddy].is_free && !heap_tree[buddy].is_split) {
+      // Identify left and right
+      left_node = (curr % 2 != 0) ? curr : buddy;
+      right_node = (curr % 2 != 0) ? buddy : curr;
+
+      // Merge into parent
+      heap_tree[parent].is_free = 1;
+      heap_tree[parent].is_split = 0;
+
+      // Clean up children
+      heap_tree[left_node].is_free = 0;
+      heap_tree[right_node].is_free = 0;
+
+      // Printfs
+      printf("Coalesced buddy nodes (order = %d, addr = %d, size = %d) & (order = %d, addr = %d, size = %d)\b",
+            heap_tree[left_node].order, heap_tree[left_node].addr, heap_tree[left_node].size,
+            heap_tree[left_node].order, heap_tree[left_node].addr, heap_tree[left_node].size);
+      printf("into the parent node (order = %d, addr = %d, size = %d)\n",
+            heap_tree[parent].order, heap_tree[parent].addr, heap_tree[parent].size);
+
+      // Move up to parent node
+      curr = parent;
+    }
+    else {
+      break;    // stop coalescing
+    }
+  }
+  return bytes_freed;
 }
 
 //----------------------------------------------------------------------

@@ -8,3 +8,5 @@ dlxsim -x os.dlx.obj -a -u same_time.dlx.obj 30 > ./../log.txt
 
 dlxsim -D p -x os.dlx.obj -a -D p -u fork_test_1.dlx.obj > ./../log.txt
 
+dlxsim -D m -x os.dlx.obj -a -D m -u heap_test.dlx.obj > ./../log.txt
+
