@@ -15,7 +15,7 @@ void main (int argc, char *argv[])
   ptr1 = malloc(40);
 
   if (ptr1 != 0) {
-    Printf("Successfully allocated 40 bytes at virtual address 0x%x\n", (int)ptr1);
+    Printf("Successfully allocated 40 bytes at virtual address 0x%d\n", (int)ptr1);
   }
   else {
     Printf("Failed to allocate 40 bytes\n");    
@@ -26,7 +26,7 @@ void main (int argc, char *argv[])
   ptr2 = malloc(100);
 
   if (ptr2 != 0) {
-    Printf("Successfully allocated 100 bytes at virtual address 0x%x\n", (int)ptr2);
+    Printf("Successfully allocated 100 bytes at virtual address 0x%d\n", (int)ptr2);
   }
   else {
     Printf("Failed to allocate 100 bytes\n");    
@@ -35,7 +35,7 @@ void main (int argc, char *argv[])
   // Test 3: Allocate a large block, 2000 bytes
   ptr3 = malloc(2000);
   if (ptr3 != 0) {
-    Printf("Successfully allocated 100 bytes at virtual address 0x%x\n", (int)ptr3);
+    Printf("Successfully allocated 100 bytes at virtual address 0x%d\n", (int)ptr3);
   }
   else {
     Printf("Failed to allocate 100 bytes\n");    
@@ -56,7 +56,7 @@ void main (int argc, char *argv[])
   // Test 7: out of bounds allocation
   ptr4 = malloc(5000);
   if (ptr4 != 0) {
-    Printf("ERROR: Successfully allocated 5000 blocks at virtual address 0x%x\n", (int)ptr4);
+    Printf("ERROR: Successfully allocated 5000 blocks at virtual address 0x%d\n", (int)ptr4);
   }
   else {
     Printf("Success: 5000 byte allocation unsuccessful\n");
