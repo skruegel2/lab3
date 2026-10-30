@@ -1,7 +1,7 @@
 #include "usertraps.h"
 #include "misc.h"
 
-#define HELLO_WORLD "hello_world.dlx.obj"
+#define HELLO_WORLD "hello_sequential.dlx.obj"
 
 void main (int argc, char *argv[])
 {
