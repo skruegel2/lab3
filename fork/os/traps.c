@@ -346,6 +346,8 @@ dointerrupt (unsigned int cause, unsigned int iar, unsigned int isr,
   uint32 pte;
   uint32 ppn;
   uint32 newPage;
+  int idx;
+  PCB* childPCB;
 
   dbprintf ('m',"Interrupt cause=0x%x iar=0x%x isr=0x%x args=0x%08x.\n",
 	    cause, iar, isr, (int)trapArgs);
@@ -570,7 +572,6 @@ dointerrupt (unsigned int cause, unsigned int iar, unsigned int isr,
       vpn = fault_addr >> MEM_L1FIELD_FIRST_BITNUM;
       pte = currentPCB->pagetable[vpn];
       ppn = pte >> MEM_L1FIELD_FIRST_BITNUM;
-
       dbprintf('p', "TRAP_ROP_ACCESS: fault = 0x%x vpn = 0x%x, ppn = 0x%x", fault_addr, vpn, ppn);
 
       // Check for read only and valid
@@ -604,6 +605,12 @@ dointerrupt (unsigned int cause, unsigned int iar, unsigned int isr,
           dbprintf('p', "Illegal read only access error\n");
           ProcessKill();
       }
+      dbprintf('p', "Valid parent page table entries:\n");
+      for (idx = 0; idx < PROCESS_PT_SIZE; idx++) {
+        if ((currentPCB->pagetable[idx] & MEM_PTE_VALID) != 0) {
+          dbprintf('p', "parent pagetable[%d] = 0x%x\n", idx, currentPCB->pagetable[idx]);
+        }
+      }      
       break;
     case TRAP_ADDRESS:
       dbprintf ('m', "TRAP_ADDRESS:Exiting after illegal address at iar=0x%x, isr=0x%x\n", iar, isr);     
