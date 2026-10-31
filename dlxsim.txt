@@ -1,8 +1,14 @@
 dlxsim -D m -x os.dlx.obj -a -D m -u hello_world.dlx.obj > ./../log.txt
 
+dlxsim -D m -x os.dlx.obj -a -D m -u invalid_access.dlx.obj > ./../log.txt
+
+dlxsim -D m -x os.dlx.obj -a -D m -u not_currently_allocated.dlx.obj > ./../log.txt
+
+dlxsim -D m -x os.dlx.obj -a -D m -u recursion.dlx.obj > ./../log.txt
+
 dlxsim -D m -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 100 > ./../log.txt
 
-dlxsim -D m -x os.dlx.obj -a -D m -u same_time.dlx.obj 10 > ./../log.txt
+dlxsim -D m -x os.dlx.obj -a -D m -u same_time.dlx.obj 30 > ./../log.txt
 
 dlxsim -x os.dlx.obj -a -u same_time.dlx.obj 30 > ./../log.txt
 
