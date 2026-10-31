@@ -58,3 +58,21 @@ OS
 5. memory_constants.h
 6. process.h
 Apps
+1. hello_world
+2. invalid_access
+3. not_currently_allocated
+4. recursion
+5. makeprocs
+6. hello_sequential
+7. same_time
+8. hello_same_time
+Question 2
+
+Files modified:
+OS
+1. memory.c
+2. process.c
+3. traps.c
+4. memory.h
+5. memory_constants.h
+6. process.h
