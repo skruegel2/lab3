@@ -89,3 +89,43 @@ Apps.
 1. fork_test_1.c
 
 Question 3.
+    User test program 1
+    1. Clean the OS by changing directory to heap-mgmt and executing mainframer.sh 'cd os && make clean'
+    2. Build the OS by changing directory to heap-mgmt and executing mainframer.sh 'cd os && make'
+    3. Clean the heap_test app by executing mainframer.sh 'cd apps/example/heap_test && make clean'
+    4. Build the heap_test app by executing mainframer.sh 'cd apps/example/heap_test && make'
+    5. Change to the bin directory and run dlxsim -D m -x os.dlx.obj -a -D m -u heap_test.dlx.obj > ./../log.txt
+    6. Examine log.txt at ./heap-mgmt and seven numbered allocation tests with printf's beginning 'Test '.  You
+    will see allocations of various sizes followed by a failed allocation (too large).
+
+Files modified:
+OS
+1. memory.c
+2. process.c
+3. traps.c
+4. memory.h
+5. memory_constants.h
+6. process.h
+Apps.
+1. heap_test.c    
+
+Question 4.
+    User test program 1
+    1. Clean the OS by changing directory to heap-mgmt-dyn and executing mainframer.sh 'cd os && make clean'
+    2. Build the OS by changing directory to heap-mgmt-dyn and executing mainframer.sh 'cd os && make'
+    3. Clean the heap_test app by executing mainframer.sh 'cd apps/example/dyn-heap_test && make clean'
+    4. Build the heap_test app by executing mainframer.sh 'cd apps/example/dyn-heap_test && make'
+    5. Change to the bin directory and run dlxsim -D m -x os.dlx.obj -a -D m -u dyn-heap-test.dlx.obj > ./../log.txt
+    6. Examine log.txt at ./heap-mgmt and seven numbered allocation tests with printf's beginning 'Test '.  You
+    will see allocations of various sizes followed by a failed allocation (too large).
+
+Files modified:
+OS
+1. memory.c
+2. process.c
+3. traps.c
+4. memory.h
+5. memory_constants.h
+6. process.h
+Apps.
+1. dyn_heap_test.c 

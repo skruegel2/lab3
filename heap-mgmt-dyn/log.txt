@@ -283,15 +283,15 @@ Translating 0x1508
 Interrupt cause=0x8000467 iar=0x150c isr=0x100 args=0x003ffee0.
 MemoryTranslateUserToSystem: page 1023 offset 3808
 Created a left child node (order = 10, addr = 0, size = 32768) of parent (order = 11, addr = 0, size = 65536)
-Created a righ child node (order = 10, addr = 32768, size = 32768) of parent (order = 11, addr = 0, size = 65536)
+Created a right child node (order = 10, addr = 32768, size = 32768) of parent (order = 11, addr = 0, size = 65536)
 Created a left child node (order = 9, addr = 0, size = 16384) of parent (order = 10, addr = 0, size = 32768)
-Created a righ child node (order = 9, addr = 16384, size = 16384) of parent (order = 10, addr = 0, size = 32768)
+Created a right child node (order = 9, addr = 16384, size = 16384) of parent (order = 10, addr = 0, size = 32768)
 Created a left child node (order = 8, addr = 0, size = 8192) of parent (order = 9, addr = 0, size = 16384)
-Created a righ child node (order = 8, addr = 8192, size = 8192) of parent (order = 9, addr = 0, size = 16384)
+Created a right child node (order = 8, addr = 8192, size = 8192) of parent (order = 9, addr = 0, size = 16384)
 Created a left child node (order = 7, addr = 0, size = 4096) of parent (order = 8, addr = 0, size = 8192)
-Created a righ child node (order = 7, addr = 4096, size = 4096) of parent (order = 8, addr = 0, size = 8192)
+Created a right child node (order = 7, addr = 4096, size = 4096) of parent (order = 8, addr = 0, size = 8192)
 Created a left child node (order = 6, addr = 0, size = 2048) of parent (order = 7, addr = 0, size = 4096)
-Created a righ child node (order = 6, addr = 2048, size = 2048) of parent (order = 7, addr = 0, size = 4096)
+Created a right child node (order = 6, addr = 2048, size = 2048) of parent (order = 7, addr = 0, size = 4096)
 MemoryTranslateUserToSystem: page 4 offset 0
 Allocated the block: order = 6, addr = 0 requested mem size = 2048, block size = 2048
 Created a heap block of size 2048 bytes: virtual address 0x4000, physical address 0x59000.
@@ -34366,5 +34366,5 @@ No runnable processes - exiting!
 Exiting at program request.
 Instructions executed: 5065047
 Time simulated: 5.065 secs
-Real time elapsed: 0.215 secs
-Execution rate: 23.61M simulated instructions per real second.
+Real time elapsed: 0.190 secs
+Execution rate: 26.73M simulated instructions per real second.

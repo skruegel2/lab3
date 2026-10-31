@@ -1133,5 +1133,5 @@ No runnable processes - exiting!
 Exiting at program request.
 Instructions executed: 4806994
 Time simulated: 4.807 secs
-Real time elapsed: 0.127 secs
-Execution rate: 37.94M simulated instructions per real second.
+Real time elapsed: 0.125 secs
+Execution rate: 38.41M simulated instructions per real second.
